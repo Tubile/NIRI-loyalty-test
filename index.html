@@ -10,167 +10,248 @@
 <meta property="og:type" content="website">
 <style>
 :root{
-  --ink:#15233f;          /* institutional navy */
-  --ink-soft:#3c4a66;
-  --paper:#fcfbf6;        /* document sheet */
-  --desk:#e7e4da;         /* background behind the sheet */
-  --rule:#cfc9b8;         /* hairline rules on paper */
-  --stamp:#b3261e;        /* rubber-stamp red */
-  --seal:#8c6a1d;         /* seal gold */
-  --ok:#1e6b3a;
-  --focus:#1a56c4;
-  --serif: Georgia, 'Times New Roman', serif;
-  --mono: 'Courier New', Courier, monospace;
+  --ink:#23201a;            /* typewriter ink, warm near-black */
+  --ink-soft:#5b5444;
+  --paper:#f7f1e1;          /* aged document sheet */
+  --paper-2:#f1e9d4;
+  --folder:#d8b15a;         /* manila folder */
+  --folder-edge:#c39a3e;
+  --desk:#3a4a3f;           /* dark green desk felt */
+  --desk-2:#2f3d34;
+  --rule:#cabd99;           /* hairline rules on paper */
+  --stamp:#b23a2e;          /* rubber-stamp red */
+  --stamp-ink:#a8362b;
+  --seal:#1f5e46;           /* deep green seal */
+  --ok:#1f6b43;
+  --focus:#9c3b2f;
+  --serif: 'Georgia', 'Times New Roman', serif;
+  --type: 'Courier New', 'Courier', monospace;
   --sans: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
-body{background:var(--desk);color:var(--ink);font-family:var(--serif);line-height:1.55;-webkit-font-smoothing:antialiased}
+body{
+  background:var(--desk);
+  background-image:
+    radial-gradient(circle at 18% 12%, rgba(255,255,255,.04), transparent 40%),
+    radial-gradient(circle at 82% 78%, rgba(0,0,0,.18), transparent 45%);
+  color:var(--ink);
+  font-family:var(--serif);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
 a{color:var(--focus)}
-:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
 button{font:inherit;cursor:pointer}
+img,svg{max-width:100%}
 
-/* ---------- top institutional bar ---------- */
-.bar{background:var(--ink);color:#f4f1e6;padding:10px 16px;display:flex;align-items:center;gap:12px}
-.bar .seal-mini{flex:0 0 auto}
-.bar .t{font-family:var(--serif);letter-spacing:.12em;font-size:12px;text-transform:uppercase}
-.bar .t b{display:block;font-size:13px;letter-spacing:.18em}
-.bar .right{margin-left:auto;font-family:var(--mono);font-size:11px;opacity:.7;white-space:nowrap}
+/* paper grain helper */
+.grain{position:relative}
+.grain::after{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+}
 
-/* ---------- shared layout ---------- */
-.wrap{max-width:880px;margin:0 auto;padding:28px 16px 80px}
-.narrow{max-width:720px}
-.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft)}
-h1{font-size:clamp(30px,5.4vw,46px);line-height:1.08;margin:.35em 0 .4em;font-weight:700}
-h2{font-size:clamp(20px,3.4vw,26px);margin:1.6em 0 .5em}
-.lede{font-size:clamp(16px,2.6vw,19px);color:var(--ink-soft);max-width:54ch}
+/* ---------- top bar: a docket strip ---------- */
+.bar{
+  background:var(--desk-2);
+  color:#e9e1cb;border-bottom:2px solid rgba(0,0,0,.3);
+  padding:9px 16px;display:flex;align-items:center;gap:12px;
+}
+.bar .seal-mini{flex:0 0 auto;color:var(--folder)}
+.bar .t{font-family:var(--type);letter-spacing:.1em;font-size:11px;text-transform:uppercase;line-height:1.3}
+.bar .t b{display:block;font-size:12px;letter-spacing:.16em}
+.bar .right{margin-left:auto;font-family:var(--type);font-size:10.5px;opacity:.6;white-space:nowrap}
 
-.btn{display:inline-block;background:var(--ink);color:#fff;border:none;border-radius:3px;
-  padding:14px 26px;font-family:var(--serif);font-size:17px;letter-spacing:.02em;text-decoration:none}
-.btn:hover{background:#0e1830}
-.btn.secondary{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
-.btn.secondary:hover{background:rgba(21,35,63,.06)}
-.btn.big{padding:16px 34px;font-size:18px}
-.btn.red{background:var(--stamp)}
-.btn.red:hover{background:#8f1d17}
-.btn:disabled{opacity:.45;cursor:not-allowed}
+/* ---------- layout ---------- */
+.wrap{max-width:900px;margin:0 auto;padding:0 18px}
+.narrow{max-width:720px;margin-left:auto;margin-right:auto}
+h1{font-size:clamp(34px,6.2vw,60px);line-height:1.04;margin:.2em 0 .35em;font-weight:700;letter-spacing:-.01em}
+h1 .hl{position:relative;white-space:nowrap}
+h1 .hl::after{content:"";position:absolute;left:-2px;right:-2px;bottom:.08em;height:.42em;background:rgba(178,58,46,.22);z-index:-1;transform:rotate(-.6deg)}
+.lede{font-size:clamp(17px,2.5vw,21px);color:var(--ink-soft);max-width:56ch;line-height:1.5}
 
-.notice{border-left:4px solid var(--seal);background:#fff;padding:14px 18px;font-size:15px;color:var(--ink-soft);margin:26px 0;max-width:62ch}
+.btn{
+  display:inline-flex;align-items:center;gap:.5em;background:var(--ink);color:var(--paper);
+  border:none;border-radius:2px;padding:14px 26px;font-family:var(--serif);font-size:17px;
+  letter-spacing:.01em;text-decoration:none;box-shadow:3px 3px 0 rgba(0,0,0,.22);transition:transform .08s,box-shadow .08s;
+}
+.btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 rgba(0,0,0,.26)}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 rgba(0,0,0,.22)}
+.btn .arr{transition:transform .12s}
+.btn:hover .arr{transform:translateX(3px)}
+.btn.big{padding:16px 32px;font-size:18px}
+.btn.ghost{background:transparent;color:var(--paper);border:1.6px solid rgba(247,241,225,.55);box-shadow:none}
+.btn.ghost:hover{background:rgba(247,241,225,.1);box-shadow:none;transform:none}
+.btn.red{background:var(--stamp);color:#fff}
+.btn.red:hover{background:#9d3025}
+.btn.secondary{background:transparent;color:var(--ink);border:1.6px solid var(--ink);box-shadow:none}
+.btn.secondary:hover{background:rgba(35,32,26,.06);box-shadow:none;transform:none}
+.btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;transform:none}
+
+/* ---------- hero ---------- */
+.hero{padding:54px 0 46px;color:var(--paper)}
+.hero h1{color:#f5eeda}
+.hero .lede{color:#d9d0b8}
+.kicker{display:inline-flex;align-items:center;gap:9px;font-family:var(--type);font-size:12px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--folder);
+  border:1px solid rgba(216,177,90,.4);border-radius:2px;padding:6px 12px;margin-bottom:22px}
+.kdot{width:7px;height:7px;border-radius:50%;background:var(--stamp);box-shadow:0 0 0 3px rgba(178,58,46,.25)}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.reassure{margin-top:18px;font-size:14.5px;color:#c2b99f;font-family:var(--type);letter-spacing:.02em;max-width:52ch}
+
+/* ---------- "how it works" band ---------- */
+.band{background:var(--paper);color:var(--ink);margin-top:8px;padding:48px 0 54px;position:relative}
+.band::before,.band::after{content:"";position:absolute;left:0;right:0;height:10px}
+.band::before{top:-10px;background:repeating-linear-gradient(90deg,var(--folder) 0 22px,var(--folder-edge) 22px 44px)}
+.band-h{font-family:var(--type);font-size:13px;letter-spacing:.28em;text-transform:uppercase;color:var(--stamp);
+  text-align:center;margin-bottom:34px;position:relative}
+.band-h::before,.band-h::after{content:"";display:inline-block;width:34px;height:1px;background:var(--rule);vertical-align:middle;margin:0 14px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.step{background:#fff;border:1px solid var(--rule);border-radius:3px;padding:26px 22px;
+  box-shadow:2px 3px 0 rgba(35,32,26,.06);position:relative}
+.step-ic{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:var(--paper-2);color:var(--seal);border:1px solid var(--rule);margin-bottom:16px}
+.step .k{font-family:var(--type);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--stamp)}
+.step h3{font-size:19px;margin:.35em 0 .4em;line-height:1.2}
+.step p{margin:0;font-size:15px;color:var(--ink-soft);line-height:1.5}
+@media (max-width:680px){.steps{grid-template-columns:1fr}}
+
+/* ---------- sample section ---------- */
+#sample{padding:52px 0 10px}
+.sample-head{text-align:center;margin-bottom:8px}
+.sample-head .band-h{color:var(--folder)}
+.sample-head .band-h::before,.sample-head .band-h::after{background:rgba(216,177,90,.4)}
+.sample-sub{color:#d4cbb2;font-size:16px;max-width:48ch;margin:0 auto}
+.specimen{margin-top:30px;position:relative;padding-bottom:30px}
+.specimen .paper{transform:rotate(-.7deg)}
+
+.notice{border:1px solid var(--folder-edge);background:var(--paper);color:var(--ink-soft);
+  padding:16px 20px;font-size:15px;border-radius:3px;margin:46px auto 0;max-width:64ch;box-shadow:2px 3px 0 rgba(0,0,0,.12)}
 .notice b{color:var(--ink)}
-
-/* ---------- landing ---------- */
-.hero{padding-top:40px}
-.hero .stamped{position:relative;display:inline-block}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
-.step{background:#fff;border:1px solid var(--rule);padding:18px 16px;border-radius:3px}
-.step .k{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--seal);text-transform:uppercase}
-.step p{margin:.5em 0 0;font-size:15px;color:var(--ink-soft)}
-.specimen{margin-top:46px;position:relative}
-.specimen .paper{transform:rotate(-1.2deg);box-shadow:0 18px 50px rgba(21,35,63,.18)}
-.footline{margin-top:60px;font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);opacity:.8;letter-spacing:.05em}
-@media (max-width:640px){.steps{grid-template-columns:1fr}}
+.footline{text-align:center;margin:30px 0 64px;font-family:var(--type);font-size:11.5px;color:#b3aa90;letter-spacing:.08em}
 
 /* ---------- the document sheet ---------- */
-.paper{background:var(--paper);border:1px solid #d8d3c2;border-radius:2px;
-  box-shadow:0 10px 34px rgba(21,35,63,.14);padding:clamp(22px,5vw,52px);position:relative;overflow:hidden}
-.paper::before{content:"";position:absolute;inset:10px;border:1px solid var(--rule);pointer-events:none}
-.letterhead{display:flex;gap:18px;align-items:center;border-bottom:2.5px solid var(--ink);padding-bottom:16px;position:relative;z-index:1}
-.letterhead .org{font-size:clamp(15px,2.6vw,20px);letter-spacing:.14em;text-transform:uppercase;font-weight:700}
-.letterhead .org small{display:block;font-weight:400;font-size:12px;letter-spacing:.22em;color:var(--ink-soft);margin-top:4px}
-.meta{width:100%;border-collapse:collapse;margin:18px 0 6px;font-family:var(--mono);font-size:13px}
-.meta td{border-bottom:1px solid var(--rule);padding:7px 4px;vertical-align:top}
-.meta td:first-child{width:38%;color:var(--ink-soft);letter-spacing:.08em;text-transform:uppercase;font-size:11px}
-.verdict{text-align:center;margin:30px 0 6px;position:relative;z-index:1}
-.verdict .score{font-size:clamp(44px,9vw,72px);font-weight:700;letter-spacing:.02em;line-height:1}
-.verdict .score small{font-size:.38em;color:var(--ink-soft);font-weight:400;letter-spacing:.1em}
-.verdict .passfail{display:inline-block;margin-top:10px;font-family:var(--mono);letter-spacing:.3em;font-size:15px;color:var(--ok);border:2px solid var(--ok);padding:5px 16px 4px;text-transform:uppercase}
-.verdict .deducted{margin-top:14px;font-size:15px;color:var(--ink-soft)}
+.paper{
+  color:var(--ink);
+  background:var(--paper);
+  background-image:linear-gradient(var(--paper),var(--paper-2));
+  border:1px solid #d3c6a1;border-radius:2px;
+  box-shadow:0 2px 0 #cdbf99, 0 18px 44px rgba(0,0,0,.34);
+  padding:clamp(24px,5vw,54px);position:relative;overflow:hidden;
+}
+.paper::before{content:"";position:absolute;inset:11px;border:1px solid var(--rule);pointer-events:none}
+.paper::after{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.55;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+}
+.letterhead{display:flex;gap:18px;align-items:center;border-bottom:2.5px double var(--ink);padding-bottom:16px;position:relative;z-index:1}
+.letterhead .seal-big{color:var(--seal);flex:0 0 auto}
+.letterhead .org{font-size:clamp(15px,2.6vw,21px);letter-spacing:.1em;text-transform:uppercase;font-weight:700;line-height:1.15}
+.letterhead .org small{display:block;font-weight:400;font-size:11px;letter-spacing:.18em;color:var(--ink-soft);margin-top:5px}
+.meta{width:100%;border-collapse:collapse;margin:18px 0 6px;font-family:var(--type);font-size:13px;position:relative;z-index:1}
+.meta td{border-bottom:1px dotted var(--rule);padding:7px 4px;vertical-align:top}
+.meta td:first-child{width:40%;color:var(--ink-soft);letter-spacing:.06em;text-transform:uppercase;font-size:10.5px}
+.verdict{text-align:center;margin:32px 0 6px;position:relative;z-index:1}
+.verdict .score{font-family:var(--serif);font-size:clamp(48px,10vw,80px);font-weight:700;letter-spacing:.01em;line-height:1;color:var(--ink)}
+.verdict .score small{font-size:.34em;color:var(--ink-soft);font-weight:400;letter-spacing:.08em}
+.verdict .passfail{display:inline-block;margin-top:10px;font-family:var(--type);letter-spacing:.3em;font-size:14px;
+  color:var(--ok);border:2px solid var(--ok);padding:5px 18px 4px;text-transform:uppercase;border-radius:2px;transform:rotate(-1.5deg)}
+.verdict .deducted{margin-top:16px;font-size:15px;color:var(--ink-soft)}
 .verdict .deducted b{color:var(--stamp)}
-.sect-h{font-family:var(--mono);font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-soft);
-  border-bottom:1px solid var(--rule);padding-bottom:6px;margin:38px 0 6px}
-.clause{padding:16px 2px 14px;border-bottom:1px dashed var(--rule)}
-.clause .no{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--seal);text-transform:uppercase}
-.clause .body{margin:.45em 0 .4em;font-size:16.5px}
-.clause .ded{font-family:var(--mono);font-size:12.5px;color:var(--stamp);letter-spacing:.06em}
+.sect-h{font-family:var(--type);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-soft);
+  border-bottom:1px solid var(--rule);padding-bottom:6px;margin:38px 0 6px;position:relative;z-index:1}
+.clause{padding:16px 2px 14px;border-bottom:1px dashed var(--rule);position:relative;z-index:1}
+.clause .no{font-family:var(--type);font-size:11.5px;letter-spacing:.12em;color:var(--stamp);text-transform:uppercase}
+.clause .body{margin:.45em 0 .4em;font-size:16.5px;line-height:1.5}
+.clause .ded{font-family:var(--type);font-size:12.5px;color:var(--stamp);letter-spacing:.04em}
 .clause .ded.plus{color:var(--ok)}
-.ledger{width:100%;border-collapse:collapse;margin-top:10px;font-family:var(--mono);font-size:13px}
-.ledger td{padding:7px 4px;border-bottom:1px solid var(--rule)}
+.ledger{width:100%;border-collapse:collapse;margin-top:10px;font-family:var(--type);font-size:13px;position:relative;z-index:1}
+.ledger td{padding:7px 4px;border-bottom:1px dotted var(--rule)}
 .ledger td:last-child{text-align:right;white-space:nowrap}
-.ledger tr.total td{border-top:2.5px solid var(--ink);border-bottom:none;font-weight:700;font-size:14px}
-.fineprint{margin-top:34px;font-size:10.5px;color:var(--ink-soft);opacity:.75;line-height:1.5;font-family:var(--mono)}
+.ledger tr.total td{border-top:2px solid var(--ink);border-bottom:none;font-weight:700;font-size:14px}
+.fineprint{margin-top:34px;font-size:10.5px;color:var(--ink-soft);opacity:.8;line-height:1.55;font-family:var(--type);position:relative;z-index:1}
 
-/* stamps & seal */
-.stamp{position:absolute;top:clamp(54px,9vw,84px);right:clamp(10px,4vw,40px);transform:rotate(-9deg);
-  border:3px double var(--stamp);color:var(--stamp);font-family:var(--mono);font-weight:700;
-  letter-spacing:.3em;font-size:clamp(13px,2.6vw,18px);padding:8px 14px 7px;text-transform:uppercase;
-  opacity:.82;mix-blend-mode:multiply;z-index:2;pointer-events:none;animation:stampIn .5s cubic-bezier(.2,1.6,.4,1) .35s backwards}
-@keyframes stampIn{from{transform:rotate(-9deg) scale(2.4);opacity:0}to{transform:rotate(-9deg) scale(1);opacity:.82}}
+/* stamp */
+.stamp{position:absolute;top:clamp(58px,9vw,92px);right:clamp(8px,4vw,38px);transform:rotate(-11deg);
+  border:3px double var(--stamp);color:var(--stamp);font-family:var(--type);font-weight:700;
+  letter-spacing:.26em;font-size:clamp(12px,2.4vw,17px);padding:7px 13px 6px;text-transform:uppercase;
+  opacity:.8;mix-blend-mode:multiply;z-index:2;pointer-events:none;border-radius:3px;
+  animation:stampIn .45s cubic-bezier(.2,1.5,.4,1) .3s backwards}
+@keyframes stampIn{from{transform:rotate(-11deg) scale(2.4);opacity:0}to{transform:rotate(-11deg) scale(1);opacity:.8}}
 @media (prefers-reduced-motion:reduce){.stamp{animation:none}}
 
 /* ---------- reveal ---------- */
-.reveal-gate{text-align:center;margin:44px 0 8px}
-.reveal{display:none;margin-top:34px;border-top:2.5px solid var(--ink);padding-top:26px}
+.reveal-gate{text-align:center;margin:44px 0 8px;position:relative;z-index:1}
+.reveal{display:none;margin-top:32px;border-top:2.5px double var(--ink);padding-top:28px;position:relative;z-index:1}
 .reveal.open{display:block;animation:fadeUp .6s ease both}
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.reveal.open{animation:none}}
-.reveal .truth{font-size:clamp(19px,3.4vw,24px);line-height:1.5}
-.reveal .truth b{background:linear-gradient(transparent 62%, #f3e3a0 62%)}
+.reveal .eyebrow{font-family:var(--type);font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--stamp)}
+.reveal .truth{font-size:clamp(19px,3.2vw,24px);line-height:1.5;margin-top:.4em}
+.reveal .truth b{background:linear-gradient(transparent 60%, rgba(216,177,90,.55) 60%)}
 .personal{background:#fff;border:1px solid var(--rule);border-left:4px solid var(--seal);
-  padding:18px 20px;margin:22px 0;font-style:italic;font-size:17px;white-space:pre-wrap}
-.commission{font-family:var(--mono);font-size:13px;color:var(--ink-soft);letter-spacing:.06em}
-.loop-cta{text-align:center;margin-top:34px;padding-top:26px;border-top:1px dashed var(--rule)}
-.loop-cta .small{font-size:13px;color:var(--ink-soft);margin-top:10px;font-family:var(--mono)}
+  padding:18px 20px;margin:24px 0;font-style:italic;font-size:17px;white-space:pre-wrap;box-shadow:2px 2px 0 rgba(0,0,0,.05)}
+.commission{font-family:var(--type);font-size:12.5px;color:var(--ink-soft);letter-spacing:.06em;line-height:1.7}
+.loop-cta{text-align:center;margin-top:34px;padding-top:28px;border-top:1px dashed var(--rule)}
+.loop-cta .small{font-size:13px;color:var(--ink-soft);margin-top:12px;font-family:var(--type)}
 
 /* ---------- form ---------- */
-.formcard{background:#fff;border:1px solid var(--rule);border-radius:3px;padding:clamp(18px,4vw,32px);margin-top:22px}
-.field{margin:20px 0}
-.field label{display:block;font-weight:700;font-size:15.5px;margin-bottom:7px}
-.field .hint{font-weight:400;color:var(--ink-soft);font-size:13.5px;display:block;margin-top:2px}
-.field input[type=text],.field textarea{width:100%;border:1.5px solid #b9b2a0;border-radius:3px;background:var(--paper);
-  font-family:var(--serif);font-size:16px;padding:11px 12px;color:var(--ink)}
+.page-head{padding:46px 0 4px;color:var(--paper)}
+.page-head .eyebrow{font-family:var(--type);font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--folder)}
+.page-head h1{color:#f5eeda}
+.page-head .lede{color:#d4cbb2}
+.formcard{color:var(--ink);background:var(--paper);border:1px solid #d3c6a1;border-radius:3px;
+  padding:clamp(20px,4vw,36px);margin:22px 0 60px;box-shadow:0 16px 40px rgba(0,0,0,.3)}
+.field{margin:22px 0}
+.field label{display:block;color:var(--ink);font-weight:700;font-size:15.5px;margin-bottom:8px}
+.field .hint{font-weight:400;color:var(--ink-soft);font-size:13.5px;display:block;margin-top:3px;font-family:var(--type);line-height:1.5}
+.field input[type=text],.field textarea{width:100%;border:1.5px solid #b6a87f;border-radius:2px;background:#fffdf6;
+  font-family:var(--serif);font-size:16px;padding:11px 13px;color:var(--ink)}
+.field input[type=text]:focus,.field textarea:focus{border-color:var(--ink)}
 .field textarea{min-height:92px;resize:vertical}
-.pronouns{display:flex;gap:10px;flex-wrap:wrap}
-.pronouns label{display:flex;align-items:center;gap:7px;border:1.5px solid #b9b2a0;border-radius:3px;
-  padding:9px 14px;font-weight:400;cursor:pointer;background:var(--paper)}
-.pronouns input{accent-color:var(--ink)}
 .cats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
 @media (max-width:640px){.cats{grid-template-columns:1fr}}
-.cat{border:1.5px solid #b9b2a0;border-radius:3px;background:var(--paper);padding:14px 14px 12px;cursor:pointer;position:relative}
+.cat{border:1.5px solid #b6a87f;border-radius:3px;background:#fffdf6;padding:14px 14px 12px;cursor:pointer;position:relative;transition:border-color .1s, box-shadow .1s}
 .cat:hover{border-color:var(--ink)}
-.cat.on{border-color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink);background:#fff}
-.cat .cn{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;color:var(--seal);text-transform:uppercase}
+.cat.on{border-color:var(--seal);box-shadow:inset 0 0 0 1.5px var(--seal);background:#fff}
+.cat.on::after{content:"\2713";position:absolute;top:9px;right:11px;color:var(--seal);font-weight:700}
+.cat .cn{font-family:var(--type);font-size:10px;letter-spacing:.16em;color:var(--stamp);text-transform:uppercase}
 .cat .ct{font-weight:700;font-size:15.5px;margin:4px 0 3px}
 .cat .cd{font-size:13px;color:var(--ink-soft)}
 .cat input{position:absolute;opacity:0;pointer-events:none}
-.counter{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);margin-top:8px;letter-spacing:.06em}
+.counter{font-family:var(--type);font-size:12.5px;color:var(--ink-soft);margin-top:10px;letter-spacing:.04em}
 .blanks{border-top:1px dashed var(--rule);margin-top:26px;padding-top:6px}
-.err{color:var(--stamp);font-size:14px;font-family:var(--mono);margin-top:14px;display:none}
+.blanks .eyebrow{font-family:var(--type);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--stamp)}
+.err{color:var(--stamp);font-size:14px;font-family:var(--type);margin-top:16px;display:none;line-height:1.5}
 .err.on{display:block}
 
 /* ---------- preview lock ---------- */
 .lockwrap{position:relative}
 .lockwrap .locked-zone{filter:blur(7px);user-select:none;pointer-events:none}
 .lockpanel{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:3}
-.lockpanel .inner{background:rgba(252,251,246,.96);border:1.5px solid var(--ink);box-shadow:0 14px 40px rgba(21,35,63,.25);
-  padding:26px 26px 22px;text-align:center;max-width:380px;margin:0 16px}
-.lockpanel .inner .lk{font-family:var(--mono);letter-spacing:.24em;font-size:12px;color:var(--stamp);text-transform:uppercase}
-.lockpanel .inner h3{margin:.5em 0 .35em;font-size:21px}
-.lockpanel .inner p{font-size:14px;color:var(--ink-soft);margin:0 0 16px}
+.lockpanel .inner{background:rgba(247,241,225,.97);border:1.5px solid var(--ink);box-shadow:0 14px 40px rgba(0,0,0,.3);
+  padding:28px 26px 24px;text-align:center;max-width:390px;margin:0 16px;border-radius:3px}
+.lockpanel .inner .lk{font-family:var(--type);letter-spacing:.22em;font-size:11px;color:var(--stamp);text-transform:uppercase}
+.lockpanel .inner h3{margin:.5em 0 .35em;font-size:22px}
+.lockpanel .inner p{font-size:14px;color:var(--ink-soft);margin:0 0 18px}
 
 /* ---------- success ---------- */
 .copybox{display:flex;gap:10px;margin:12px 0 4px;flex-wrap:wrap}
-.copybox input,.copybox textarea{flex:1;min-width:220px;border:1.5px solid #b9b2a0;border-radius:3px;background:#fff;
-  font-family:var(--mono);font-size:13px;padding:11px 12px;color:var(--ink)}
+.copybox input,.copybox textarea{flex:1;min-width:220px;border:1.5px solid #b6a87f;border-radius:2px;background:#fffdf6;
+  font-family:var(--type);font-size:13px;padding:11px 12px;color:var(--ink)}
 .copybox textarea{min-height:74px;resize:vertical}
 .copied{color:var(--ok)!important;border-color:var(--ok)!important}
 
 /* ---------- modal ---------- */
-.modal-bg{position:fixed;inset:0;background:rgba(14,22,40,.55);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}
+.modal-bg{position:fixed;inset:0;background:rgba(20,16,10,.6);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}
 .modal-bg.on{display:flex}
-.modal{background:var(--paper);border:1.5px solid var(--ink);max-width:430px;width:100%;padding:26px 24px 22px;border-radius:3px;box-shadow:0 24px 70px rgba(0,0,0,.35)}
-.modal h3{margin:0 0 .4em;font-size:21px}
+.modal{color:var(--ink);background:var(--paper);border:1.5px solid var(--ink);max-width:440px;width:100%;padding:28px 26px 22px;border-radius:3px;box-shadow:0 24px 70px rgba(0,0,0,.45)}
+.modal h3{margin:0 0 .4em;font-size:22px}
 .modal p{font-size:14.5px;color:var(--ink-soft)}
-.modal .row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.modal .row{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+
+a.editlink{display:inline-block;margin-top:18px;font-family:var(--type);font-size:13px;color:var(--paper);opacity:.8}
 </style>
 </head>
 <body>
@@ -421,7 +502,7 @@ function reportPaperHTML(data, opts){
   <div class="paper">
     <div class="stamp">Confidential</div>
     <div class="letterhead">
-      <span style="color:var(--seal)">${sealSVG(64)}</span>
+      <span class="seal-big">${sealSVG(64)}</span>
       <div class="org">National Institute of Relationship Integrity
         <small>Office of Loyalty Assessment \u00b7 Records Division</small>
       </div>
@@ -454,7 +535,7 @@ function reportPaperHTML(data, opts){
     </div>
     <div class="reveal" id="reveal">
       <div class="eyebrow">Final determination</div>
-      <p class="truth">This institute does not exist. Your loyalty was never tested. No committee met. The lab is somebody\u2019s kitchen.<br><br>What is real: <b>someone knows you well enough to write Section ${buildClauses(data).worstNo}.</b></p>
+      <p class="truth">Nobody tested you. There was no exam, no committee, no institute. <b>${esc(data.f)} sat down and filed every one of these about you</b> \u2014 from memory, because they pay that much attention.<br><br>That\u2019s the whole thing. You weren\u2019t investigated. You were noticed.</p>
       <div class="personal">${esc(data.m)}</div>
       <p class="commission">COMMISSIONED BY: ${esc(data.f).toUpperCase()}<br>GROUNDS FOR COMMISSION: LOVE</p>
       <div class="loop-cta">
@@ -468,13 +549,13 @@ function reportPaperHTML(data, opts){
 /* ---------- views ---------- */
 function viewLanding(){
   const demo = {
-    v:1, n:'Jordan', f:'Someone who loves Jordan',
+    v:1, n:'Jordan', f:'Alex',
     c:[
       {id:'reply', b:['4\u20136 business hours','the group chat']},
-      {id:'hungry', b:['my fries']},
+      {id:'hungry', b:['fries']},
       {id:'stream', b:['Severance']}
     ],
-    x:'', m:'Relax. You passed. I just needed it on record that I know about the fries.\n\u2014 love, me',
+    x:'', m:'Relax. You passed. I just needed it on record that I know about the fries.\n\u2014 love, Alex',
     r:[2,1], k:'LT-0001-A'
   };
   const sampleLink = '#r=' + b64uEncode(demo);
@@ -482,29 +563,67 @@ function viewLanding(){
   app.innerHTML = `
   <div class="wrap">
     <div class="hero">
-      <div class="eyebrow">Official notice \u00b7 Case No. LT-4417-B</div>
-      <h1>Their loyalty test results<br>are ready.</h1>
-      <p class="lede">They never took a test. That\u2019s the point. Build an official-looking loyalty report about your partner \u2014 scored, stamped, itemized with their actual habits \u2014 and send them the link. Then listen.</p>
-      <p style="margin-top:26px">
-        <a class="btn big" href="#/create">Run the test \u2014 3 minutes</a>
-        <a class="btn secondary big" href="${sampleLink}" style="margin-left:8px">See a sample report</a>
-      </p>
+      <div class="kicker">
+        <span class="kdot"></span> A prank disguised as paperwork
+      </div>
+      <h1>File an <span class="hl">official loyalty report</span><br>on the person you love.</h1>
+      <p class="lede">You answer three questions about their tiny crimes \u2014 the fries they steal, the \u201comw\u201d that\u2019s a lie, the show they watched without you. We turn it into a stamped, scored government-style document. You send the link. They lose it.</p>
+
+      <div class="cta-row">
+        <a class="btn big" href="#/create">Build their report <span class="arr">\u2192</span></a>
+        <a class="btn ghost big" href="#sample">See one first</a>
+      </div>
+      <p class="reassure">No one actually gets tested. That\u2019s the joke \u2014 you fill it in yourself, because you know them too well. Takes about 3 minutes.</p>
     </div>
+  </div>
 
-    <div class="steps">
-      <div class="step"><div class="k">01 \u00b7 You testify</div><p>Three questions about their habits. The ones you both already know about.</p></div>
-      <div class="step"><div class="k">02 \u00b7 We file it</div><p>Stamped, scored, itemized. The verdict always passes \u2014 the deductions are where it hurts.</p></div>
-      <div class="step"><div class="k">03 \u00b7 You send the link</div><p>It looks real for exactly 25 seconds. Then it gets warm. The scream is included.</p></div>
+  <div class="band">
+    <div class="wrap">
+      <div class="band-h">How the prank works</div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-ic">${icPen()}</div>
+          <div class="k">First</div>
+          <h3>You snitch on them</h3>
+          <p>Pick 3 of their most annoying-adorable habits and fill in the blanks. You\u2019re the only witness.</p>
+        </div>
+        <div class="step">
+          <div class="step-ic">${icStamp()}</div>
+          <div class="k">Then</div>
+          <h3>We make it look terrifyingly official</h3>
+          <p>Seals, a case number, a real score, and a verdict. It reads like a summons. It is not a summons.</p>
+        </div>
+        <div class="step">
+          <div class="step-ic">${icSend()}</div>
+          <div class="k">Finally</div>
+          <h3>You send it. Be in the room.</h3>
+          <p>\u201cWait\u2026 what is this?\u201d \u2192 reading \u2192 the exact moment they realize it\u2019s you. That\u2019s the part you film.</p>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <div class="notice"><b>House rules.</b> Every report passes \u2014 the score never drops below 86. No third parties, no real accusations. The only infidelity we test for is watching your show without you.</div>
-
+  <div class="wrap" id="sample">
+    <div class="sample-head">
+      <div class="band-h">Here\u2019s one that landed</div>
+      <p class="sample-sub">Alex filed this on Jordan. Scroll it like Jordan would \u2014 then hit the button at the bottom.</p>
+    </div>
     <div class="specimen narrow">${reportPaperHTML(demo, {specimen:true})}</div>
+  </div>
 
-    <p class="footline">THE NATIONAL INSTITUTE OF RELATIONSHIP INTEGRITY \u00b7 EST. NEVER \u00b7 TRUSTED BY ZERO GOVERNMENT AGENCIES</p>
+  <div class="wrap">
+    <div class="notice"><b>The line we don\u2019t cross.</b> Every report passes \u2014 the score never drops below 86. No real accusations, no third parties, nothing that ruins a good thing. The only infidelity we investigate is watching the show without you.</div>
+    <p class="footline">National Institute of Relationship Integrity \u00b7 est. never \u00b7 trusted by zero government agencies</p>
   </div>`;
   wireReveal();
+  const s = document.querySelector('a[href="#sample"]');
+  if (s) s.addEventListener('click', e=>{ e.preventDefault(); document.getElementById('sample').scrollIntoView({behavior:'smooth'}); });
 }
+
+/* small inline step icons (stroke, inherit color) */
+function icPen(){return '<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>';}
+function icStamp(){return '<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21h14"/><path d="M9 17h6l-1-5a3 3 0 1 0-4 0Z"/></svg>';}
+function icSend(){return '<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4Z"/></svg>';}
 
 function viewCreate(){
   const d = loadDraft() || {};
@@ -513,10 +632,10 @@ function viewCreate(){
   (d.c || []).forEach(x => blanksVal[x.id] = x.b);
 
   app.innerHTML = `
-  <div class="wrap narrow">
+  <div class="wrap narrow page-head">
     <div class="eyebrow">Intake form \u00b7 NIRI 7-B</div>
-    <h1>Open a file.</h1>
-    <p class="lede">Three minutes. Everything you type ends up in an official document, so make it count.</p>
+    <h1>Open a file on them.</h1>
+    <p class="lede">No one gets tested \u2014 you fill it in yourself, from memory. That\u2019s what makes it land. Three minutes.</p>
 
     <div class="formcard">
       <div class="field">
@@ -637,7 +756,7 @@ function viewPreview(){
   const d = loadDraft();
   if (!d){ location.hash = '#/create'; return; }
   app.innerHTML = `
-  <div class="wrap narrow">
+  <div class="wrap narrow page-head">
     <div class="eyebrow">Step 2 of 3 \u00b7 Review</div>
     <h1>The file on ${esc(d.n)} is ready.</h1>
     <p class="lede">Verdict\u2019s on the record. The findings stay sealed until you unlock.</p>
@@ -661,17 +780,17 @@ function viewSuccess(){
   const d = loadDraft();
   if (!d){ location.hash = '#/create'; return; }
   const link = baseURL() + '#r=' + b64uEncode(d);
-  const preMsg = 'so this came back today and I think you should see it\n' + link;
+  const preMsg = 'I had you officially assessed. The results came back.\n' + link;
 
   app.innerHTML = `
-  <div class="wrap narrow">
+  <div class="wrap narrow page-head">
     <div class="eyebrow">Step 3 of 3 \u00b7 Delivery</div>
     <h1>Filed. Sealed. Ready to ruin ${esc(d.n)}\u2019s afternoon.</h1>
     <p class="lede">Send it from <b>your</b> phone \u2014 that\u2019s part of the bit. Be in the room if you can. Film it; it\u2019s your living room.</p>
 
     <div class="formcard">
       <div class="field">
-        <label>The message to send <span class="hint">Copy it exactly. Deadpan delivery does the heavy lifting \u2014 no \u201clol\u201d, no emojis, no mercy.</span></label>
+        <label>The message to send <span class="hint">Copy it exactly. It already gives away that it\u2019s you \u2014 that\u2019s the point. Deadpan does the rest: no \u201clol\u201d, no emojis.</span></label>
         <div class="copybox">
           <textarea id="preMsg" readonly>${esc(preMsg)}</textarea>
           ${copyBtn('preMsg')}
