@@ -313,6 +313,51 @@ a.editlink{display:inline-block;margin-top:18px;font-family:var(--type);font-siz
 .wax.breaking{animation:waxbreak .5s ease forwards}
 @keyframes waxbreak{0%{transform:scale(1) rotate(0)}40%{transform:scale(1.12) rotate(-3deg)}100%{transform:scale(.6) rotate(8deg);opacity:0}}
 @media (prefers-reduced-motion:reduce){.wax.breaking{animation:none;opacity:0}}
+
+/* ---------- checkout line items + anchor pricing ---------- */
+.lineitems{margin:0 0 6px}
+.li{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:9px 2px;border-bottom:1px dotted var(--rule);font-size:15px}
+.li .li-name{color:var(--ink)}
+.li .li-price{font-family:var(--type);font-size:14px;white-space:nowrap}
+.li .was{color:var(--ink-soft);text-decoration:line-through;margin-right:8px;font-size:12.5px}
+.li .now{font-weight:700;color:var(--ink)}
+.li .launch-tag{display:inline-block;font-family:var(--type);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ok);border:1px solid var(--ok);border-radius:2px;padding:1px 6px;margin-left:8px;vertical-align:1px}
+
+/* ---------- post-purchase upsell page ---------- */
+.upsell-card{background:var(--paper);color:var(--ink);border:1px solid #d3c6a1;border-radius:3px;
+  padding:clamp(22px,4vw,36px);margin:24px 0 14px;box-shadow:0 16px 40px rgba(0,0,0,.3);position:relative;overflow:hidden}
+.upsell-card .ia-stamp{position:absolute;top:18px;right:-34px;transform:rotate(35deg);background:var(--stamp);color:#fff;
+  font-family:var(--type);font-size:10px;letter-spacing:.22em;text-transform:uppercase;padding:5px 40px}
+.upsell-eyebrow{font-family:var(--type);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--stamp)}
+.upsell-card h2{margin:.4em 0 .4em;font-size:clamp(22px,4vw,30px);line-height:1.15}
+.upsell-card .pitch{font-size:16.5px;color:var(--ink-soft);line-height:1.6;max-width:60ch}
+.upsell-card .pitch b{color:var(--ink)}
+.mystery{border:1px dashed var(--seal);border-radius:3px;background:#fff;padding:14px 16px;margin:18px 0;font-size:14.5px;color:var(--ink-soft);font-family:var(--type);line-height:1.6}
+.upsell-price{display:flex;align-items:baseline;gap:12px;margin:18px 0 4px;font-family:var(--type)}
+.upsell-price .was{font-size:17px;color:var(--ink-soft);text-decoration:line-through}
+.upsell-price .now{font-size:30px;font-weight:700;color:var(--ink);font-family:var(--serif)}
+.upsell-price .once{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--stamp)}
+.upsell-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+.declink{display:block;margin-top:16px;font-family:var(--type);font-size:13px;color:var(--ink-soft)}
+
+/* ---------- internal affairs notice (inside victim reveal) ---------- */
+.ia-notice{margin-top:30px;border:2px solid var(--stamp);border-radius:3px;background:#fff;padding:20px 20px 18px;position:relative}
+.ia-notice::before{content:"INTERNAL AFFAIRS DIVISION";position:absolute;top:-10px;left:14px;background:#fff;
+  font-family:var(--type);font-size:10px;letter-spacing:.22em;color:var(--stamp);padding:0 8px}
+.ia-notice p{margin:.3em 0 .8em;font-size:15.5px;line-height:1.55}
+.ia-notice .small{font-family:var(--type);font-size:12px;color:var(--ink-soft);margin-top:10px}
+
+/* ---------- avenge form + IA report accents ---------- */
+.ia .eyebrow,.ia .upsell-eyebrow{color:var(--stamp)}
+.charge-auto{border-left:4px solid var(--stamp);background:#fff;padding:14px 16px;margin:18px 0;font-size:15px;color:var(--ink-soft)}
+.charge-auto b{color:var(--ink);display:block;margin-bottom:4px}
+.verdict .guilty{display:inline-block;margin-top:10px;font-family:var(--type);letter-spacing:.3em;font-size:14px;
+  color:var(--stamp);border:2px solid var(--stamp);padding:5px 18px 4px;text-transform:uppercase;border-radius:2px;transform:rotate(-1.5deg)}
+.sentence-box{background:#fff;border:1px solid var(--rule);border-left:4px solid var(--stamp);
+  padding:18px 20px;margin:24px 0 8px;font-size:17px}
+.sentence-box .sb-h{font-family:var(--type);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--stamp);margin-bottom:8px}
+
 </style>
 </head>
 <body>
@@ -420,6 +465,52 @@ const CUSTOM_PTS = 2;
    IMPORTANT: set this to a REAL, honest figure before launch (or remove the strip).
    Don't display a number you can't stand behind. */
 const PROOF_COUNT = '1,000';
+
+/* ---------- Internal Affairs: counter-case charges (the revenge upsell) ---------- */
+const CHARGES = [
+  {
+    id:'hypo', t:'Aggravated Hypocrisy',
+    d:'Audited you. Does worse.',
+    q:'What do they do that\u2019s worse than anything in your report?',
+    ph:'e.g. leaves every cabinet door open like a poltergeist',
+    tpl:(b)=>`The respondent commissioned a formal audit of someone else\u2019s behavior. Meanwhile, on record: the respondent ${b}. The Division finds this, frankly, rich.`
+  },
+  {
+    id:'deny', t:'Tampering With Reality',
+    d:'Denies it. You\u2019ve both seen it.',
+    q:'What do they deny doing that you\u2019ve witnessed with your own eyes?',
+    ph:'e.g. talking to the dog in a full secret language',
+    tpl:(b)=>`The respondent denies ${b}. Eyewitness testimony (yours) confirms otherwise. Each denial has been logged as a separate offense.`
+  },
+  {
+    id:'seize', t:'Unlawful Seizure of Household Assets',
+    d:'It was never officially theirs.',
+    q:'What do they control at home that was never officially granted to them?',
+    ph:'e.g. the thermostat / the remote / the good pillow',
+    tpl:(b)=>`${b} has been under the respondent\u2019s exclusive control for an extended period. The Division reviewed the records: no permit was ever issued.`
+  },
+  {
+    id:'late', t:'Impersonating a Punctual Person',
+    d:'\u201cI\u2019m never late.\u201d Sure.',
+    q:'What are they always late for, while claiming they\u2019re never late?',
+    ph:'e.g. literally every dinner reservation',
+    tpl:(b)=>`The respondent maintains a public reputation for punctuality while consistently late for ${b}. The Division checked the timestamps. The timestamps disagree.`
+  },
+  {
+    id:'kitchen', t:'Crimes Against the Kitchen',
+    d:'The Division has seen things.',
+    q:'What\u2019s their worst kitchen offense?',
+    ph:'e.g. returns the empty carton to the fridge',
+    tpl:(b)=>`Kitchen surveillance confirms the respondent ${b}. The Division has seen many things. This still stood out.`
+  },
+  {
+    id:'audio', t:'Noise Violations (Domestic)',
+    d:'You hear it. They don\u2019t.',
+    q:'What sound do they make constantly without noticing?',
+    ph:'e.g. hums the same four notes of one song, forever',
+    tpl:(b)=>`Audio monitoring documents the respondent ${b} on a near-daily basis. When confronted, the respondent appeared genuinely unaware. The Division believes them. It doesn\u2019t help.`
+  }
+];
 
 /* ---------- utilities ---------- */
 const $ = (s, el=document) => el.querySelector(s);
@@ -604,6 +695,13 @@ function reportPaperHTML(data, opts){
       <p class="truth">Nobody tested you. There was no exam, no committee, no institute. <b>${esc(data.f)} sat down and filed every one of these about you</b> \u2014 from memory, because they pay that much attention.<br><br>That\u2019s the whole thing. You weren\u2019t investigated. You were noticed.</p>
       <div class="personal">${esc(data.m)}</div>
       <p class="commission">COMMISSIONED BY: ${esc(data.f).toUpperCase()}<br>GROUNDS FOR COMMISSION: LOVE</p>
+      ${data.u ? `
+      <div class="ia-notice">
+        <p><b>One more thing.</b> ${esc(data.f)} pre-authorized a counter-investigation — <b>into themselves.</b> They paid for it. They don’t know what you’ll file, and they don’t get to see it coming.</p>
+        <p>You pick the charges. You set the sentence. They’ve already agreed to serve it.</p>
+        <a class="btn red big" href="${baseURL()}#a=${b64uEncode({n:data.f, f:data.n, k:data.k})}">Open the case against ${esc(data.f)} →</a>
+        <div class="small">Pre-paid in full · the respondent waived all rights · sentencing is at your discretion</div>
+      </div>` : ''}
       <div class="loop-cta">
         <a class="btn red big" href="${baseURL()}#/create">Open a file on someone \u2192</a>
         <div class="small">Filing takes 3 minutes. Revenge has never been this organized.</div>
@@ -831,6 +929,16 @@ function viewPreview(){
     <div class="checkout" id="checkout">
       <div class="co-h">Order summary \u00b7 Case ${esc(d.k)}</div>
       <div class="session-timer" id="sessionTimer">Session secure \u00b7 draft self-clears in <b id="sessionClock">15:00</b> to protect subject privacy</div>
+      <div class="lineitems">
+        <div class="li">
+          <span class="li-name">The full report on ${esc(d.n)}<span class="launch-tag">Launch price</span></span>
+          <span class="li-price"><span class="was">$14.95</span><span class="now">$4.95</span></span>
+        </div>
+        <div class="li" id="bumpLine" style="display:none">
+          <span class="li-name">Classified Wax Seal</span>
+          <span class="li-price"><span class="now">$2.99</span></span>
+        </div>
+      </div>
       <label class="bump" id="bump">
         <input type="checkbox" id="bumpToggle">
         <span class="box"></span>
@@ -842,7 +950,7 @@ function viewPreview(){
       </label>
       <div class="total-row">
         <span class="lbl">Total today</span>
-        <span class="amt" id="total">$4.99</span>
+        <span class="amt" id="total">$4.95</span>
       </div>
       <button class="btn red big pay" id="unlockBtn">Unlock &amp; deliver</button>
       <p class="guarantee">Instant link \u00b7 they\u2019ll never know it cost less than a coffee</p>
@@ -857,9 +965,9 @@ function viewPreview(){
   function refresh(){
     const on = toggle.checked;
     bump.classList.toggle('on', on);
-    total.innerHTML = on
-      ? '<span class="strike">$4.99</span>$7.98'
-      : '$4.99';
+    const bl = $('#bumpLine');
+    if (bl) bl.style.display = on ? 'flex' : 'none';
+    total.textContent = on ? '$7.94' : '$4.95';
   }
   toggle.addEventListener('change', refresh);
   refresh();
@@ -885,11 +993,63 @@ function viewPreview(){
             const cur = loadDraft() || d;
             cur.s = sealed ? 1 : 0;
             saveDraft(cur);
+            location.hash = '#/upsell';
+          } },
+        { label:'Back', secondary:true }
+      ]
+    );
+  });
+}
+
+function viewUpsell(){
+  const d = loadDraft();
+  if (!d){ location.hash = '#/create'; return; }
+  app.innerHTML = `
+  <div class="wrap narrow page-head">
+    <div class="eyebrow">One-time offer \u00b7 before delivery</div>
+    <h1>You know what happens next.</h1>
+    <p class="lede">The second ${esc(d.n)} stops laughing, they\u2019ll want payback. Here\u2019s the move nobody sees coming: you hand them the weapon yourself.</p>
+
+    <div class="upsell-card">
+      <div class="ia-stamp">Classified</div>
+      <div class="upsell-eyebrow">Internal Affairs Division</div>
+      <h2>Let ${esc(d.n)} open a case against <em>you</em>.</h2>
+      <p class="pitch">At the end of their report, ${esc(d.n)} finds a notice: <b>Internal Affairs has pre-authorized a counter-investigation \u2014 into you.</b> Your own institute turns on you. They pick the charges. They set the sentence. You\u2019ve already paid for all of it.</p>
+      <div class="mystery">What you won\u2019t know: which charges they file, or what sentence they hand down. It\u2019s a different document with different crimes \u2014 their chance to prove they notice your nonsense too. The first surprise was theirs. The second one is yours.</div>
+      <p class="pitch">Fair warning from the Division: sentences tend to involve breakfast in bed, foot rubs, and surrendering the remote. <b>You will lose this case. That\u2019s the point.</b></p>
+      <div class="upsell-price">
+        <span class="was">$19.95</span>
+        <span class="now">$9.95</span>
+        <span class="once">This screen only</span>
+      </div>
+      <div class="upsell-actions">
+        <button class="btn red big" id="upYes">Arm the counter-case \u2014 $9.95</button>
+      </div>
+      <a href="#" class="declink" id="upNo">No thanks \u2014 I prefer to live unpunished. Deliver as is \u2192</a>
+    </div>
+  </div>`;
+
+  $('#upYes').addEventListener('click', ()=>{
+    showModal(
+      'Checkout isn\u2019t wired in yet.',
+      'Beta build \u2014 payment drops in here. The counter-case is armed for free for now.',
+      [
+        { label:'Arm it', fn:()=>{
+            const cur = loadDraft() || d;
+            cur.u = 1;
+            saveDraft(cur);
             location.hash = '#/success';
           } },
         { label:'Back', secondary:true }
       ]
     );
+  });
+  $('#upNo').addEventListener('click', e=>{
+    e.preventDefault();
+    const cur = loadDraft() || d;
+    cur.u = 0;
+    saveDraft(cur);
+    location.hash = '#/success';
   });
 }
 
@@ -924,6 +1084,7 @@ function viewSuccess(){
     </div>
 
     ${d.s ? '<div class="notice"><b>Classified Wax Seal is active.</b> ' + esc(d.n) + ' will hit a classified wax-sealed envelope first, and has to break it to read the report. Worth being in the room for.</div>' : ''}
+    ${d.u ? '<div class="notice"><b>The counter-case is armed.</b> At the end of the report, ' + esc(d.n) + ' gets to open an Internal Affairs case against you — charges and sentence of their choosing. You won’t see it until it lands. Good luck.</div>' : ''}
 
     <div class="notice"><b>Timing tip.</b> Send it when you\u2019re both home and bored \u2014 not when they\u2019re driving, working, or annoyed at you. Comedy is timing; so is mercy.</div>
 
@@ -931,6 +1092,186 @@ function viewSuccess(){
   </div>`;
   wireCopy(app);
   $('#newFileBtn').addEventListener('click', ()=> sessionStorage.removeItem('lt_draft'));
+}
+
+/* ---------- Internal Affairs: counter-case flow ---------- */
+function viewAvenge(ref){
+  // ref: {n: respondent (original buyer), f: filer (original victim), k: case no}
+  app.innerHTML = `
+  <div class="wrap narrow page-head ia">
+    <div class="eyebrow">Internal Affairs Division \u00b7 Pre-authorized</div>
+    <h1>The case against ${esc(ref.n)}.</h1>
+    <p class="lede">They audited you. Now the Institute audits them \u2014 and they\u2019re paying for it. Pick your charges, set the sentence. This is your moment to prove you notice everything too.</p>
+
+    <div class="formcard">
+      <div class="charge-auto"><b>Count 1 \u2014 Abuse of Institutional Power (pre-filed)</b>
+      The respondent commissioned a federal-looking document to prank the person they love. The Division notes the audacity. And, privately, the effort.</div>
+
+      <div class="field">
+        <label>Pick 2 more charges <span class="hint">Choose the two they can\u2019t argue with.</span></label>
+        <div class="cats" id="charges">
+          ${CHARGES.map(c=>`
+            <label class="cat" data-id="${c.id}">
+              <input type="checkbox">
+              <div class="cn">Internal Affairs</div>
+              <div class="ct">${c.t}</div>
+              <div class="cd">${c.d}</div>
+            </label>`).join('')}
+        </div>
+        <div class="counter" id="chgCount"></div>
+      </div>
+
+      <div class="blanks" id="chgBlanks"></div>
+
+      <div class="field">
+        <label for="fSentence">The sentence <span class="hint">They already agreed to serve whatever you write here. Make it something they owe you \u2014 keep it sweet, that\u2019s the twist.</span></label>
+        <textarea id="fSentence" maxlength="200" placeholder="e.g. breakfast in bed this Sunday + I pick the next three shows + one foot rub, no complaints"></textarea>
+      </div>
+
+      <div class="field">
+        <label for="fNote">Your closing statement <span class="hint">They\u2019ll read this at the very end. Last word is yours.</span></label>
+        <textarea id="fNote" maxlength="300" placeholder="e.g. You started this. \u2014 with love, ${esc(ref.f)}"></textarea>
+      </div>
+
+      <button class="btn red big" id="fileBtn">File the case \u2192</button>
+      <div class="err" id="chgErr"></div>
+    </div>
+  </div>`;
+
+  const wrap = $('#charges'), countEl = $('#chgCount'), blanksEl = $('#chgBlanks');
+  const vals = {};
+  function selIds(){ return [...wrap.querySelectorAll('.cat.on')].map(el=>el.dataset.id); }
+  function renderBlanks(){
+    const ids = selIds();
+    countEl.textContent = `${ids.length} of 2 selected`;
+    blanksEl.innerHTML = ids.length ? `<div class="eyebrow" style="margin:18px 0 4px">Your testimony</div>` : '';
+    ids.forEach(id=>{
+      const c = CHARGES.find(x=>x.id===id);
+      const val = vals[id] || '';
+      blanksEl.innerHTML += `
+      <div class="field">
+        <label for="cb_${id}">${c.t} \u2014 ${c.q}</label>
+        <input type="text" id="cb_${id}" maxlength="90" value="${esc(val)}" placeholder="${c.ph}">
+      </div>`;
+    });
+  }
+  wrap.querySelectorAll('.cat').forEach(card=>{
+    card.addEventListener('click', e=>{
+      e.preventDefault();
+      selIds().forEach(id=>{ vals[id] = ($('#cb_'+id)||{}).value || ''; });
+      const on = card.classList.contains('on');
+      if (!on && selIds().length >= 2){
+        countEl.textContent = '2 of 2 selected \u2014 deselect one to swap.';
+        return;
+      }
+      card.classList.toggle('on');
+      renderBlanks();
+    });
+  });
+  renderBlanks();
+
+  $('#fileBtn').addEventListener('click', ()=>{
+    const err = $('#chgErr');
+    err.classList.remove('on');
+    const fail = m=>{ err.textContent = m; err.classList.add('on'); };
+    const ids = selIds();
+    if (ids.length !== 2) return fail('Pick exactly 2 charges. Count 1 is already on the books.');
+    const c = [];
+    for (const id of ids){
+      const v = $('#cb_'+id).value.trim();
+      if (!v) return fail('Fill in your testimony \u2014 the Division can\u2019t prosecute on vibes.');
+      c.push({ id, b:v });
+    }
+    const sentence = $('#fSentence').value.trim();
+    if (!sentence) return fail('Set the sentence. They agreed to serve it \u2014 don\u2019t waste that.');
+    const note = $('#fNote').value.trim();
+    if (!note) return fail('Write your closing statement. The last word is the whole point.');
+    const data = { t:'ia', n:ref.n, f:ref.f, c, sn:sentence, m:note, k:ref.k.replace('LT-','IA-') };
+    sessionStorage.setItem('ia_link', baseURL() + '#i=' + b64uEncode(data));
+    location.hash = '#/filed';
+  });
+}
+
+function viewIADelivery(){
+  const link = sessionStorage.getItem('ia_link');
+  if (!link){ location.hash = ''; return; }
+  const preMsg = 'Internal Affairs got involved. This is your official notice.\n' + link;
+  app.innerHTML = `
+  <div class="wrap narrow page-head ia">
+    <div class="eyebrow">Case filed</div>
+    <h1>The Division thanks you for your testimony.</h1>
+    <p class="lede">Send it whenever you\u2019re ready. They paid for this \u2014 they just don\u2019t know what \u201cthis\u201d is yet.</p>
+    <div class="formcard">
+      <div class="field">
+        <label>The message to send <span class="hint">Deadpan. They taught you that.</span></label>
+        <div class="copybox">
+          <textarea id="iaMsg" readonly>${esc(preMsg)}</textarea>
+          ${copyBtn('iaMsg')}
+        </div>
+      </div>
+      <p style="margin-top:8px"><a href="${esc(link)}" target="_blank" rel="noopener">Preview the case file \u2192</a></p>
+    </div>
+  </div>`;
+  wireCopy(app);
+}
+
+function viewIAReport(data){
+  const counts = data.c.map((sel, i)=>{
+    const c = CHARGES.find(x=>x.id===sel.id);
+    return c ? { no:'Count '+(i+2), t:c.t, body:c.tpl(esc(sel.b)) } : null;
+  }).filter(Boolean);
+
+  app.innerHTML = `
+  <div class="wrap narrow" style="padding-top:34px;padding-bottom:60px">
+    <div class="paper">
+      <div class="stamp">Disciplinary</div>
+      <div class="letterhead">
+        <span class="seal-big">${sealSVG(64)}</span>
+        <div class="org">National Institute of Relationship Integrity
+          <small>Internal Affairs Division \u00b7 Office of Consequences</small>
+        </div>
+      </div>
+      <table class="meta">
+        <tr><td>Case No.</td><td>${esc(data.k)}</td></tr>
+        <tr><td>Respondent</td><td>${esc(data.n).toUpperCase()}</td></tr>
+        <tr><td>Filed by</td><td>WITHHELD UNTIL SENTENCING</td></tr>
+        <tr><td>Date</td><td>${todayStr()}</td></tr>
+        <tr><td>Status</td><td>VERDICT REACHED \u2014 SENTENCE BINDING</td></tr>
+      </table>
+      <div class="verdict">
+        <div class="score" style="font-size:clamp(34px,7vw,54px)">GUILTY</div>
+        <div class="guilty">On all counts</div>
+        <div class="deducted">The respondent recently commissioned an audit. The Institute investigated the auditor.</div>
+      </div>
+      <div class="sect-h">Charges \u2014 as filed</div>
+      <div class="clause">
+        <div class="no">Count 1 \u2014 Abuse of Institutional Power</div>
+        <div class="body">The respondent commissioned a federal-looking document to prank the person they love. The Division notes the audacity. And, privately, the effort.</div>
+        <div class="ded">Plea entered: no contest.</div>
+      </div>
+      ${counts.map(c=>`
+      <div class="clause">
+        <div class="no">${c.no} \u2014 ${c.t}</div>
+        <div class="body">${c.body}</div>
+        <div class="ded">Disputed by respondent. Dispute overruled.</div>
+      </div>`).join('')}
+      <div class="sect-h">Sentencing</div>
+      <div class="sentence-box">
+        <div class="sb-h">The respondent is hereby sentenced to:</div>
+        ${esc(data.sn)}
+      </div>
+      <p class="fineprint">Internal Affairs does not exist. Neither did the Institute \u2014 but you both knew that by now. The sentence, however, is real, was pre-agreed by the respondent at the time of purchase, and is considered binding in this household. There is no appeals process. NIRI Form 9-C (rev. never).</p>
+      <div class="reveal open" style="display:block">
+        <div class="eyebrow">Closing statement</div>
+        <div class="personal">${esc(data.m)}</div>
+        <p class="commission">FILED BY: ${esc(data.f).toUpperCase()}<br>MOTIVE: LOVE. AND A LITTLE PAYBACK.</p>
+        <div class="loop-cta">
+          <a class="btn red big" href="${baseURL()}#/create">Start an investigation of your own \u2192</a>
+          <div class="small">Filing takes 3 minutes. Someone you love is getting away with something right now.</div>
+        </div>
+      </div>
+    </div>
+  </div>`;
 }
 
 function waxSVG(){
@@ -1048,8 +1389,22 @@ function route(){
       }
     } catch(e){ /* fall through to landing */ }
   }
+  if (h.startsWith('#a=')){
+    try {
+      const ref = b64uDecode(h.slice(3));
+      if (ref && ref.n && ref.f) return viewAvenge(ref);
+    } catch(e){ /* fall through */ }
+  }
+  if (h.startsWith('#i=')){
+    try {
+      const data = b64uDecode(h.slice(3));
+      if (data && data.t === 'ia' && data.n && data.c) return viewIAReport(data);
+    } catch(e){ /* fall through */ }
+  }
   if (h.startsWith('#/create'))  return viewCreate();
   if (h.startsWith('#/preview')) return viewPreview();
+  if (h.startsWith('#/upsell'))  return viewUpsell();
+  if (h.startsWith('#/filed'))   return viewIADelivery();
   if (h.startsWith('#/success')) return viewSuccess();
   viewLanding();
 }
