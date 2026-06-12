@@ -377,6 +377,16 @@ a.editlink{display:inline-block;margin-top:18px;font-family:var(--type);font-siz
   padding:18px 20px;margin:24px 0 8px;font-size:17px}
 .sentence-box .sb-h{font-family:var(--type);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--stamp);margin-bottom:8px}
 
+.btn{min-height:48px}
+.risk-line{margin:14px 0 0;font-family:var(--type);font-size:13px;letter-spacing:.05em;color:#d4cbb2}
+.clause.fx{opacity:0;transform:translateY(12px)}
+.clause.fx.in{opacity:1;transform:none;transition:opacity .5s ease, transform .5s ease}
+.verdict .passfail{animation:passIn .45s cubic-bezier(.2,1.5,.4,1) .55s backwards}
+@keyframes passIn{from{transform:rotate(-1.5deg) scale(2);opacity:0}to{transform:rotate(-1.5deg) scale(1);opacity:1}}
+@media (prefers-reduced-motion:reduce){
+  .verdict .passfail{animation:none}
+  .clause.fx{opacity:1;transform:none}
+}
 </style>
 </head>
 <body>
@@ -1399,7 +1409,43 @@ function viewReport(data){
   wireReveal();
 }
 
+function wireReportFX(){
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const scoreEl = document.querySelector('.verdict .score');
+  if (scoreEl && !reduce){
+    const m = scoreEl.textContent.match(/\d+/);
+    if (m){
+      const target = parseInt(m[0], 10);
+      const small = scoreEl.querySelector('small');
+      const suffix = small ? small.outerHTML : '';
+      const t0 = performance.now(), dur = 650;
+      (function tick(now){
+        const p = Math.min(1, (now - t0) / dur);
+        const eased = 1 - Math.pow(1 - p, 3);
+        scoreEl.innerHTML = Math.round(target * eased) + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+      })(t0);
+    }
+  }
+  const clauses = [...document.querySelectorAll('.clause')];
+  if (clauses.length){
+    if (reduce || !('IntersectionObserver' in window)){
+      clauses.forEach(c => c.classList.add('in'));
+    } else {
+      clauses.forEach(c => c.classList.add('fx'));
+      const io = new IntersectionObserver(entries=>{
+        entries.forEach(en=>{
+          if (en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+        });
+      }, { rootMargin: '0px 0px -8% 0px' });
+      clauses.forEach(c => io.observe(c));
+      setTimeout(()=> clauses.forEach(c => c.classList.add('in')), 2500);
+    }
+  }
+}
+
 function wireReveal(){
+  wireReportFX();
   const btn = $('#revealBtn');
   if (!btn) return;
   btn.addEventListener('click', ()=>{
