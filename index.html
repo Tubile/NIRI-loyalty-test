@@ -1417,21 +1417,27 @@ function viewPolicy(kind){
   const B = BUSINESS;
   const blocks = {
     terms: { h:'Terms of Service', body:`
-      <p><b>The short version:</b> The Loyalty Test is a novelty entertainment product. You buy a personalized, joke \u201cassessment\u201d to share with someone you know. It is not a real evaluation, the issuing \u201cinstitute\u201d does not exist, and nothing in a report is a statement of fact.</p>
-      <p><b>Acceptable use.</b> You agree to create reports only about people you personally know and who would take it as the affectionate joke it\u2019s meant to be. You will not use the product to harass, threaten, deceive for gain, impersonate real organizations or officials, or target strangers. We may refuse or remove access for misuse.</p>
-      <p><b>Your content.</b> The details you enter are yours. By using the product you confirm you have the right to use them and that they don\u2019t violate anyone\u2019s rights. Reports are encoded into the share link itself; anyone with the link can view that report.</p>
-      <p><b>No warranty / liability.</b> The product is provided \u201cas is,\u201d for entertainment. To the maximum extent permitted by law, ${B.name} is not liable for how recipients react or for any indirect or consequential damages. These terms are governed by the laws of ${B.jurisdiction}.</p>
-      <p><b>Changes.</b> We may update these terms; continued use means acceptance. Questions: ${B.email}.</p>` },
+      <p><b>1. Overview:</b> The Loyalty Test is a novelty entertainment product. You buy a personalized, joke \u201cassessment\u201d to share with someone you know. It is not a real evaluation, the issuing \u201cinstitute\u201d does not exist, and nothing in a report is a statement of fact.</p>
+      <p><b>2. Responsible Use:</b> This service is for entertainment only. You agree NOT to use our service to harass, bully, threaten, or target strangers. You agree to create reports only about people you personally know. You take full responsibility for the consequences and reactions to the prank.</p>
+      <p><b>3. Digital Products:</b> Our products are digital links generated and delivered instantly on your device. Once the link is generated, the product is considered used. Please refer to our Refund Policy.</p>
+      <p><b>4. Limitation of Liability:</b> We provide the tool; you decide how to use it. To the maximum extent permitted by law, ${B.name} is not liable for any damages, relationship issues, or indirect consequences arising from your use of the service. These terms are governed by the laws of ${B.jurisdiction}.</p>
+      <p><b>5. Contact:</b> Questions about the Terms should be sent to ${B.email}.</p>` },
     privacy: { h:'Privacy Policy', body:`
-      <p><b>What we collect.</b> To deliver your order we process your payment through our payment provider (which handles your card details directly) and may collect a contact email for your receipt. We use basic, privacy-respecting analytics to understand how the site is used.</p>
-      <p><b>The report content.</b> The names and details you type are encoded directly into your private share link. We don\u2019t require accounts, and we don\u2019t sell your personal information.</p>
-      <p><b>Third parties.</b> Payment processing, hosting, and analytics are handled by standard service providers under their own privacy terms. We share data with them only as needed to run the service or as required by law.</p>
-      <p><b>Your choices.</b> You can request access to or deletion of personal data we hold about you by emailing ${B.email}. Effective ${B.effective}.</p>` },
+      <p><b>1. Your Report Data (The big one):</b> We DO NOT store the names, habits, or inside jokes you type into the form. They are encoded directly into your unique, private share link. Because we don't save your report data in a database, there is nothing for us to sell or leak.</p>
+      <p><b>2. Collecting Personal Information:</b> To fulfill your order, we collect Device Information (browser, IP) and Order Information (payment metadata, contact email) through our secure payment providers.</p>
+      <p><b>3. Sharing & Third Parties:</b> Payment processing and basic site analytics are handled by standard, secure service providers under their own privacy terms. We share data with them only as needed to process your transaction or as required by law.</p>
+      <p><b>4. Data Retention:</b> Because your actual prank content is link-encoded, we retain zero report data. Transaction logs (Order ID, IP) are retained securely for fraud prevention and legal compliance.</p>
+      <p><b>5. Contact:</b> For privacy questions, please contact us at ${B.email}. Effective ${B.effective}.</p>` },
     refund: { h:'Refund Policy', body:`
-      <p><b>Digital product.</b> Because your report is generated and delivered instantly as a unique link, all sales are generally final.</p>
-      <p><b>We\u2019ll make it right.</b> If something genuinely went wrong, the link didn\u2019t work, you were charged twice, or the product failed to deliver, email ${B.email} within 14 days and we\u2019ll sort out a fix or a refund.</p>
-      <p><b>How to reach us.</b> Include your order/case number so we can find it fast.</p>` },
-    contact: { h:'Contact', body:`
+      <p>At The Loyalty Test, we provide a digital novelty experience. Because our products are generated instantly on your device, we have a strict policy to prevent abuse.</p>
+      <p><b>1. Instantly Delivered Digital Goods:</b> Your purchase instantly unlocks a generated, unique report link. Once the link is generated and unsealed, the product is considered "used" and <b>no refunds will be issued</b>. All sales are final.</p>
+      <p><b>2. Exceptions (When we DO refund):</b> We will happily issue a full refund in the following specific cases:</p>
+      <ul style="margin: 8px 0 16px 20px; line-height: 1.6;">
+        <li><b>Technical Error:</b> If the report failed to generate or the link is broken due to a technical issue on our end.</li>
+        <li><b>Double Charge:</b> If you were accidentally charged twice for the exact same case file.</li>
+      </ul>
+      <p><b>3. Chargebacks:</b> Please contact us before filing a dispute with your bank. We are reasonable humans and will fix genuine technical errors.</p>
+      <p><b>4. How to Request:</b> If you meet the exception criteria, email <b>${B.email}</b> within 14 days. Subject Line: Refund Request - [Your Order/Case Number].</p>` },
       <p>Questions, problems, or feedback? Email <b>${B.email}</b> and a real human (not the fictional institute) will get back to you.</p>
       <p>For order issues, include your case number so we can locate it quickly.</p>` }
   };
