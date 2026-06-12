@@ -3,11 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Loyalty Assessment Results — Confidential</title>
+<title>Loyalty Assessment Results · Confidential</title>
 <meta name="description" content="Case file finalized. Approved for release.">
-<meta property="og:title" content="Loyalty Assessment Results — Confidential">
+<meta property="og:title" content="Loyalty Assessment Results · Confidential">
 <meta property="og:description" content="Case file finalized and approved for release. This link expires in 48 hours.">
 <meta property="og:type" content="website">
+<!-- OG image: the link-preview thumbnail shown in WhatsApp/iMessage. MUST be an absolute https URL.
+     Replace the domain below once your custom domain is connected, then re-share to refresh caches. -->
+<meta property="og:image" content="https://REPLACE-WITH-YOUR-DOMAIN/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Loyalty Assessment Results · Confidential">
+<meta name="twitter:description" content="Case file finalized and approved for release.">
+<meta name="twitter:image" content="https://REPLACE-WITH-YOUR-DOMAIN/og.png">
 <style>
 :root{
   --ink:#23201a;            /* typewriter ink, warm near-black */
@@ -106,6 +115,14 @@ h1 .hl::after{content:"";position:absolute;left:-2px;right:-2px;bottom:.08em;hei
   padding:20px 22px;margin:46px auto 0;max-width:64ch;box-shadow:2px 3px 0 rgba(0,0,0,.12)}
 .faq-q{font-weight:700;font-size:16.5px;margin-bottom:7px}
 .faq-a{font-size:15px;color:var(--ink-soft);line-height:1.55}
+.policy-nav{text-align:center;margin:14px 0 60px;font-family:var(--type);font-size:13px}
+.policy-nav a{color:#c2b99f;text-decoration:none;margin:0 4px}
+.policy-nav a:hover{color:#e9e1cb;text-decoration:underline}
+.policy-nav span{color:#7a8479}
+.policy-fine{margin-top:12px;font-size:11px;color:#8f9890;max-width:60ch;margin-left:auto;margin-right:auto;line-height:1.5}
+.policy-body p{margin:0 0 14px;font-size:15.5px;line-height:1.6}
+.policy-body p:last-child{margin-bottom:0}
+.policy-body b{color:var(--ink)}
 
 /* ---------- "how it works" band ---------- */
 .band{background:var(--paper);color:var(--ink);margin-top:8px;padding:48px 0 54px;position:relative}
@@ -407,7 +424,7 @@ const CATS = [
     id:'omw', no:'2.1', rank:3, pts:3,
     title:'The \u201comw\u201d Doctrine',
     desc:'Says \u201con my way.\u201d Is not on any way.',
-    q:[{label:'When they text \u201comw\u201d \u2014 where are they actually?', ph:'e.g. still on the couch, in a towel'}],
+    q:[{label:'When they text \u201comw,\u201d where are they actually?', ph:'e.g. still on the couch, in a towel'}],
     tpl:(b)=>`The subject\u2019s \u201comw\u201d texts were audited. In 87% of cases, at the moment of sending, the subject was ${b[0]}. The phrase has been reclassified from \u201cstatus update\u201d to \u201cwishful thinking.\u201d`
   },
   {
@@ -444,7 +461,7 @@ const CATS = [
     desc:'The only cheating we recognize.',
     q:[{label:'Name the exact show they secretly watched without you.', ph:'e.g. Severance'}],
     tpl:(b)=>`The only act of infidelity detected: evidence points to solo viewing of \u201c${b[0]},\u201d in breach of the Joint Viewing Agreement. During the official rewatch together, the subject faked surprise. Believability rating: low.`,
-    dedNote:' \u2014 the most severe in this report'
+    dedNote:'; the most severe in this report'
   }
 ];
 
@@ -465,6 +482,18 @@ const CUSTOM_PTS = 2;
    IMPORTANT: set this to a REAL, honest figure before launch (or remove the strip).
    Don't display a number you can't stand behind. */
 const PROOF_COUNT = '1,000';
+
+/* ---------- Business details for the legal pages ----------
+   Fill these in once before launch. These boilerplate policies are a STARTING POINT
+   for a low-cost digital novelty product; have them reviewed before you rely on them.
+   Meta/TikTok ad review generally expects reachable Terms, Privacy, and Refund pages. */
+const BUSINESS = {
+  name:    '[Your Business Name]',
+  site:    'theloyaltytest.com',         // display only; set to your real domain
+  email:   '[your-support-email@domain]',
+  jurisdiction: '[Your Country/State]',
+  effective:    'June 2026'
+};
 
 /* ---------- Internal Affairs: counter-case charges (the revenge upsell) ---------- */
 const CHARGES = [
@@ -650,7 +679,7 @@ function reportPaperHTML(data, opts){
 
   const ledgerHTML = `
     <table class="ledger">
-      ${clauses.map(c=>`<tr><td>Section ${c.no}</td><td>${c.pts > 0 ? '\u2212' + c.pts : c.pts < 0 ? '+1' : '\u2014'}</td></tr>`).join('')}
+      ${clauses.map(c=>`<tr><td>Section ${c.no}</td><td>${c.pts > 0 ? '\u2212' + c.pts : c.pts < 0 ? '+1' : '0'}</td></tr>`).join('')}
       <tr class="total"><td>TOTAL DEDUCTED</td><td>\u2212${total}</td></tr>
       <tr class="total"><td>FINAL SCORE</td><td>${score} / 100</td></tr>
     </table>`;
@@ -669,7 +698,7 @@ function reportPaperHTML(data, opts){
       <tr><td>Subject</td><td>${esc(data.n).toUpperCase()}</td></tr>
       <tr><td>Requested by</td><td>WITHHELD UNTIL FINAL DETERMINATION</td></tr>
       <tr><td>Date finalized</td><td>${todayStr()}</td></tr>
-      <tr><td>Status</td><td>FINALIZED \u2014 APPROVED FOR RELEASE</td></tr>
+      <tr><td>Status</td><td>FINALIZED. APPROVED FOR RELEASE</td></tr>
     </table>
     <div class="verdict">
       <div class="score">${score}<small> / 100</small></div>
@@ -679,7 +708,7 @@ function reportPaperHTML(data, opts){
     <div class="${locked ? 'lockwrap' : ''}">
       ${locked ? '<div class="lockpanel"><div class="inner"><div class="lk">Preview restricted</div><h3>The findings are sealed.</h3><p>' + esc(data.n) + '\u2019s itemized deductions, the official stamp, and the final verdict are one step away.</p><button class="btn red big" id="toCheckout">Unlock the file \u2193</button></div></div>' : ''}
       <div class="${locked ? 'locked-zone' : ''}">
-        <div class="sect-h">Itemized findings \u2014 excerpt</div>
+        <div class="sect-h">Itemized findings: excerpt</div>
         ${clauseHTML}
         <div class="sect-h">Deduction ledger</div>
         ${ledgerHTML}
@@ -692,12 +721,12 @@ function reportPaperHTML(data, opts){
     </div>
     <div class="reveal" id="reveal">
       <div class="eyebrow">Final determination</div>
-      <p class="truth">Nobody tested you. There was no exam, no committee, no institute. <b>${esc(data.f)} sat down and filed every one of these about you</b> \u2014 from memory, because they pay that much attention.<br><br>That\u2019s the whole thing. You weren\u2019t investigated. You were noticed.</p>
+      <p class="truth">There was no test. No institute, no committee, nobody watching.<br><br>Just <b>${esc(data.f)}, who knows you well enough to file every one of these from memory.</b> You weren\u2019t investigated. You were noticed.</p>
       <div class="personal">${esc(data.m)}</div>
       <p class="commission">COMMISSIONED BY: ${esc(data.f).toUpperCase()}<br>GROUNDS FOR COMMISSION: LOVE</p>
       ${data.u ? `
       <div class="ia-notice">
-        <p><b>One more thing.</b> ${esc(data.f)} pre-authorized a counter-investigation — <b>into themselves.</b> They paid for it. They don’t know what you’ll file, and they don’t get to see it coming.</p>
+        <p><b>One more thing.</b> ${esc(data.f)} pre-authorized a counter-investigation, <b>into themselves.</b> They paid for it. They don’t know what you’ll file, and they don’t get to see it coming.</p>
         <p>You pick the charges. You set the sentence. They’ve already agreed to serve it.</p>
         <a class="btn red big" href="${baseURL()}#a=${b64uEncode({n:data.f, f:data.n, k:data.k})}">Open the case against ${esc(data.f)} →</a>
         <div class="small">Pre-paid in full · the respondent waived all rights · sentencing is at your discretion</div>
@@ -719,7 +748,7 @@ function viewLanding(){
       {id:'hungry', b:['fries']},
       {id:'stream', b:['Severance']}
     ],
-    x:'', m:'Relax. You passed. I just needed it on record that I know about the fries.\n\u2014 love, Alex',
+    x:'', m:'Relax. You passed. I just needed it on record that I know about the fries.\nLove, Alex',
     r:[2,1], k:'LT-0001-A'
   };
   const sampleLink = '#r=' + b64uEncode(demo);
@@ -728,7 +757,7 @@ function viewLanding(){
   <div class="wrap">
     <div class="hero">
       <h1>File an <span class="hl">official loyalty report</span><br>on the person you love.</h1>
-      <p class="lede">You report their tiniest crimes \u2014 the fries they steal, the \u201comw\u201d that\u2019s a lie, the show they watched without you. We generate a stamped, scored, government-grade document. You text the link. They sweat for ten seconds, then melt.</p>
+      <p class="lede">You report their tiniest crimes: the fries they steal, the \u201comw\u201d that\u2019s a lie, the show they watched without you. We generate a stamped, scored, government-grade document. You text the link. They sweat for ten seconds, then melt.</p>
 
       <div class="cta-row">
         <a class="btn big" href="#/create">Build their report \u00b7 3 min <span class="arr">\u2192</span></a>
@@ -758,7 +787,7 @@ function viewLanding(){
           <div class="step-ic">${icSend()}</div>
           <div class="k">Finally</div>
           <h3>You send it. Be in the room.</h3>
-          <p>They open the link, panic for ten seconds \u2014 then realize someone loves them enough to notice the little things.</p>
+          <p>They open the link, panic for ten seconds, then realize someone loves them enough to notice the little things.</p>
         </div>
       </div>
     </div>
@@ -767,17 +796,24 @@ function viewLanding(){
   <div class="wrap" id="sample">
     <div class="sample-head">
       <div class="band-h">Declassified case file: Alex &amp; Jordan</div>
-      <p class="sample-sub">Alex audited Jordan. Read it exactly how Jordan did \u2014 then start your own file below.</p>
+      <p class="sample-sub">Alex audited Jordan. Read it exactly how Jordan did, then start your own file below.</p>
     </div>
     <div class="specimen narrow">${reportPaperHTML(demo, {specimen:true})}</div>
   </div>
 
   <div class="wrap">
     <div class="faq">
-      <div class="faq-q">\u201cWait \u2014 will this actually make them mad?\u201d</div>
-      <div class="faq-a">No. The system is rigged to pass them every time. It\u2019s built to mock their snoring, not their character \u2014 no real jealousy, no third parties, no actual accusations. This is a joke for people in love.</div>
+      <div class="faq-q">\u201cWait, will this actually make them mad?\u201d</div>
+      <div class="faq-a">No. The system is rigged to pass them every time. It\u2019s built to mock their snoring, not their character: no real jealousy, no third parties, no actual accusations. This is a joke for people in love.</div>
     </div>
     <p class="footline">National Institute of Relationship Integrity \u00b7 est. never \u00b7 trusted by zero government agencies</p>
+    <nav class="policy-nav">
+      <a href="#/terms">Terms</a><span>\u00b7</span>
+      <a href="#/privacy">Privacy</a><span>\u00b7</span>
+      <a href="#/refund">Refunds</a><span>\u00b7</span>
+      <a href="#/contact">Contact</a>
+      <div class="policy-fine">The Loyalty Test is an entertainment product. The \u201cinstitute\u201d is fictional and the reports are not real assessments.</div>
+    </nav>
   </div>`;
   wireReveal();
   const s = document.querySelector('a[href="#sample"]');
@@ -828,7 +864,7 @@ function viewCreate(){
       <div class="blanks" id="blanks"></div>
 
       <div class="field">
-        <label for="fCustom">Optional: one finding in your own words <span class="hint">We\u2019ll format this as Section 9.9 \u2014 a chronic habit, a crime against leftovers. No real suspicions: funny is the whole job.</span></label>
+        <label for="fCustom">Optional: one finding in your own words <span class="hint">We\u2019ll format this as Section 9.9: a chronic habit, a crime against leftovers. No real suspicions: funny is the whole job.</span></label>
         <textarea id="fCustom" maxlength="220" placeholder="e.g. Subject claims to hate reality TV. Subject has opinions only a regular viewer could hold.">${esc(d.x||'')}</textarea>
       </div>
 
@@ -859,7 +895,7 @@ function viewCreate(){
         const val = (blanksVal[id] && blanksVal[id][qi]) || '';
         blanksEl.innerHTML += `
         <div class="field">
-          <label for="b_${id}_${qi}">${c.title} \u2014 ${q.label}</label>
+          <label for="b_${id}_${qi}">${c.title}: ${q.label}</label>
           <input type="text" id="b_${id}_${qi}" maxlength="90" value="${esc(val)}" placeholder="${q.ph}">
         </div>`;
       });
@@ -875,7 +911,7 @@ function viewCreate(){
       });
       const on = card.classList.contains('on');
       if (!on && selectedIds().length >= 3) {
-        countEl.textContent = '3 of 3 selected \u2014 deselect one to swap.';
+        countEl.textContent = '3 of 3 selected. Deselect one to swap.';
         return;
       }
       card.classList.toggle('on');
@@ -903,7 +939,7 @@ function viewCreate(){
       if (b.some(v=>!v)) return fail(`Fill in your testimony for \u201c${cat.title}.\u201d The lab can\u2019t fabricate everything.`);
       c.push({ id, b });
     }
-    if (!from) return fail('We need your name \u2014 it only appears at the reveal.');
+    if (!from) return fail('We need your name. It only appears at the reveal.');
     if (!msg)  return fail('Write the reveal message. It\u2019s the part they\u2019ll screenshot.');
 
     // two distinct random clauses
@@ -944,7 +980,7 @@ function viewPreview(){
         <span class="box"></span>
         <span class="bump-body">
           <span class="bump-tag">Highly recommended</span>
-          <p class="bump-title">Add the Classified Wax Seal \u2014 <span class="pr">+$2.99</span></p>
+          <p class="bump-title">Add the Classified Wax Seal <span class="pr">+$2.99</span></p>
           <p class="bump-desc">Make ${esc(d.n)} break a digital, classified wax seal before reading. That initial flinch of \u201cwait, what is this?\u201d is the part you came for.</p>
         </span>
       </label>
@@ -987,7 +1023,7 @@ function viewPreview(){
     const sealed = toggle.checked;
     showModal(
       'Checkout isn\u2019t wired in yet.',
-      'This is the beta build \u2014 the payment step (Stripe / PayPal) drops in right here, and the order bump rides along with it. For now, unlocking is free.',
+      'This is the beta build. The payment step (Stripe / PayPal) drops in right here, and the order bump rides along with it. For now, unlocking is free.',
       [
         { label: sealed ? 'Unlock free (with seal)' : 'Unlock free', fn:()=>{
             const cur = loadDraft() || d;
@@ -1008,31 +1044,31 @@ function viewUpsell(){
   <div class="wrap narrow page-head">
     <div class="eyebrow">One-time offer \u00b7 before delivery</div>
     <h1>You know what happens next.</h1>
-    <p class="lede">The second ${esc(d.n)} stops laughing, they\u2019ll want payback. Here\u2019s the move nobody sees coming: you hand them the weapon yourself.</p>
+    <p class="lede">The second ${esc(d.n)} stops laughing, they\u2019ll want payback. So hand them the weapon yourself.</p>
 
     <div class="upsell-card">
       <div class="ia-stamp">Classified</div>
       <div class="upsell-eyebrow">Internal Affairs Division</div>
       <h2>Let ${esc(d.n)} open a case against <em>you</em>.</h2>
-      <p class="pitch">At the end of their report, ${esc(d.n)} finds a notice: <b>Internal Affairs has pre-authorized a counter-investigation \u2014 into you.</b> Your own institute turns on you. They pick the charges. They set the sentence. You\u2019ve already paid for all of it.</p>
-      <div class="mystery">What you won\u2019t know: which charges they file, or what sentence they hand down. It\u2019s a different document with different crimes \u2014 their chance to prove they notice your nonsense too. The first surprise was theirs. The second one is yours.</div>
-      <p class="pitch">Fair warning from the Division: sentences tend to involve breakfast in bed, foot rubs, and surrendering the remote. <b>You will lose this case. That\u2019s the point.</b></p>
+      <p class="pitch">At the end of their report, ${esc(d.n)} gets a notice: <b>Internal Affairs has authorized a counter-case against you.</b> They pick the charges. They set the sentence. You\u2019ve already paid.</p>
+      <div class="mystery"><b>It\u2019s a different document, with different crimes.</b> You won\u2019t know what they file or how they\u2019ll sentence you. The first surprise was theirs. This one\u2019s yours.</div>
+      <p class="pitch"><b>You will lose this case. That\u2019s the point.</b></p>
       <div class="upsell-price">
         <span class="was">$19.95</span>
         <span class="now">$9.95</span>
         <span class="once">This screen only</span>
       </div>
       <div class="upsell-actions">
-        <button class="btn red big" id="upYes">Arm the counter-case \u2014 $9.95</button>
+        <button class="btn red big" id="upYes">Arm the counter-case \u00b7 $9.95</button>
       </div>
-      <a href="#" class="declink" id="upNo">No thanks \u2014 I prefer to live unpunished. Deliver as is \u2192</a>
+      <a href="#" class="declink" id="upNo">No thanks, deliver as is \u2192</a>
     </div>
   </div>`;
 
   $('#upYes').addEventListener('click', ()=>{
     showModal(
       'Checkout isn\u2019t wired in yet.',
-      'Beta build \u2014 payment drops in here. The counter-case is armed for free for now.',
+      'Beta build. Payment drops in here. The counter-case is armed for free for now.',
       [
         { label:'Arm it', fn:()=>{
             const cur = loadDraft() || d;
@@ -1063,11 +1099,11 @@ function viewSuccess(){
   <div class="wrap narrow page-head">
     <div class="eyebrow">Step 3 of 3 \u00b7 Delivery</div>
     <h1>Filed. Sealed. Ready to ruin ${esc(d.n)}\u2019s afternoon.</h1>
-    <p class="lede">Send it from <b>your</b> phone \u2014 that\u2019s part of the bit. Be in the room if you can. Film it; it\u2019s your living room.</p>
+    <p class="lede">Send it from <b>your</b> phone. That\u2019s part of the bit. Be in the room if you can. Film it; it\u2019s your living room.</p>
 
     <div class="formcard">
       <div class="field">
-        <label>The message to send <span class="hint">Copy it exactly. It already gives away that it\u2019s you \u2014 that\u2019s the point. Deadpan does the rest: no \u201clol\u201d, no emojis.</span></label>
+        <label>The message to send <span class="hint">Copy it exactly. It already gives away that it\u2019s you. That\u2019s the point. Deadpan does the rest: no \u201clol\u201d, no emojis.</span></label>
         <div class="copybox">
           <textarea id="preMsg" readonly>${esc(preMsg)}</textarea>
           ${copyBtn('preMsg')}
@@ -1084,9 +1120,9 @@ function viewSuccess(){
     </div>
 
     ${d.s ? '<div class="notice"><b>Classified Wax Seal is active.</b> ' + esc(d.n) + ' will hit a classified wax-sealed envelope first, and has to break it to read the report. Worth being in the room for.</div>' : ''}
-    ${d.u ? '<div class="notice"><b>The counter-case is armed.</b> At the end of the report, ' + esc(d.n) + ' gets to open an Internal Affairs case against you — charges and sentence of their choosing. You won’t see it until it lands. Good luck.</div>' : ''}
+    ${d.u ? '<div class="notice"><b>The counter-case is armed.</b> At the end of the report, ' + esc(d.n) + ' gets to open an Internal Affairs case against you, with charges and sentence of their choosing. You won’t see it until it lands. Good luck.</div>' : ''}
 
-    <div class="notice"><b>Timing tip.</b> Send it when you\u2019re both home and bored \u2014 not when they\u2019re driving, working, or annoyed at you. Comedy is timing; so is mercy.</div>
+    <div class="notice"><b>Timing tip.</b> Send it when you\u2019re both home and bored, not when they\u2019re driving, working, or annoyed at you. Comedy is timing; so is mercy.</div>
 
     <p style="margin-top:30px"><a class="btn secondary" href="#/create" id="newFileBtn">Open another file</a></p>
   </div>`;
@@ -1101,10 +1137,10 @@ function viewAvenge(ref){
   <div class="wrap narrow page-head ia">
     <div class="eyebrow">Internal Affairs Division \u00b7 Pre-authorized</div>
     <h1>The case against ${esc(ref.n)}.</h1>
-    <p class="lede">They audited you. Now the Institute audits them \u2014 and they\u2019re paying for it. Pick your charges, set the sentence. This is your moment to prove you notice everything too.</p>
+    <p class="lede">They audited you. Now the Institute audits them, and they\u2019re paying for it. Pick your charges, set the sentence. This is your moment to prove you notice everything too.</p>
 
     <div class="formcard">
-      <div class="charge-auto"><b>Count 1 \u2014 Abuse of Institutional Power (pre-filed)</b>
+      <div class="charge-auto"><b>Count 1: Abuse of Institutional Power (pre-filed)</b>
       The respondent commissioned a federal-looking document to prank the person they love. The Division notes the audacity. And, privately, the effort.</div>
 
       <div class="field">
@@ -1124,13 +1160,13 @@ function viewAvenge(ref){
       <div class="blanks" id="chgBlanks"></div>
 
       <div class="field">
-        <label for="fSentence">The sentence <span class="hint">They already agreed to serve whatever you write here. Make it something they owe you \u2014 keep it sweet, that\u2019s the twist.</span></label>
+        <label for="fSentence">The sentence <span class="hint">They already agreed to serve whatever you write here. Make it something they owe you, and keep it sweet. That\u2019s the twist.</span></label>
         <textarea id="fSentence" maxlength="200" placeholder="e.g. breakfast in bed this Sunday + I pick the next three shows + one foot rub, no complaints"></textarea>
       </div>
 
       <div class="field">
         <label for="fNote">Your closing statement <span class="hint">They\u2019ll read this at the very end. Last word is yours.</span></label>
-        <textarea id="fNote" maxlength="300" placeholder="e.g. You started this. \u2014 with love, ${esc(ref.f)}"></textarea>
+        <textarea id="fNote" maxlength="300" placeholder="e.g. You started this. With love, ${esc(ref.f)}"></textarea>
       </div>
 
       <button class="btn red big" id="fileBtn">File the case \u2192</button>
@@ -1150,7 +1186,7 @@ function viewAvenge(ref){
       const val = vals[id] || '';
       blanksEl.innerHTML += `
       <div class="field">
-        <label for="cb_${id}">${c.t} \u2014 ${c.q}</label>
+        <label for="cb_${id}">${c.t}: ${c.q}</label>
         <input type="text" id="cb_${id}" maxlength="90" value="${esc(val)}" placeholder="${c.ph}">
       </div>`;
     });
@@ -1161,7 +1197,7 @@ function viewAvenge(ref){
       selIds().forEach(id=>{ vals[id] = ($('#cb_'+id)||{}).value || ''; });
       const on = card.classList.contains('on');
       if (!on && selIds().length >= 2){
-        countEl.textContent = '2 of 2 selected \u2014 deselect one to swap.';
+        countEl.textContent = '2 of 2 selected. Deselect one to swap.';
         return;
       }
       card.classList.toggle('on');
@@ -1179,11 +1215,11 @@ function viewAvenge(ref){
     const c = [];
     for (const id of ids){
       const v = $('#cb_'+id).value.trim();
-      if (!v) return fail('Fill in your testimony \u2014 the Division can\u2019t prosecute on vibes.');
+      if (!v) return fail('Fill in your testimony. The Division can\u2019t prosecute on vibes.');
       c.push({ id, b:v });
     }
     const sentence = $('#fSentence').value.trim();
-    if (!sentence) return fail('Set the sentence. They agreed to serve it \u2014 don\u2019t waste that.');
+    if (!sentence) return fail('Set the sentence. They agreed to serve it, so don\u2019t waste that.');
     const note = $('#fNote').value.trim();
     if (!note) return fail('Write your closing statement. The last word is the whole point.');
     const data = { t:'ia', n:ref.n, f:ref.f, c, sn:sentence, m:note, k:ref.k.replace('LT-','IA-') };
@@ -1200,7 +1236,7 @@ function viewIADelivery(){
   <div class="wrap narrow page-head ia">
     <div class="eyebrow">Case filed</div>
     <h1>The Division thanks you for your testimony.</h1>
-    <p class="lede">Send it whenever you\u2019re ready. They paid for this \u2014 they just don\u2019t know what \u201cthis\u201d is yet.</p>
+    <p class="lede">Send it whenever you\u2019re ready. They paid for this. They just don\u2019t know what \u201cthis\u201d is yet.</p>
     <div class="formcard">
       <div class="field">
         <label>The message to send <span class="hint">Deadpan. They taught you that.</span></label>
@@ -1236,22 +1272,22 @@ function viewIAReport(data){
         <tr><td>Respondent</td><td>${esc(data.n).toUpperCase()}</td></tr>
         <tr><td>Filed by</td><td>WITHHELD UNTIL SENTENCING</td></tr>
         <tr><td>Date</td><td>${todayStr()}</td></tr>
-        <tr><td>Status</td><td>VERDICT REACHED \u2014 SENTENCE BINDING</td></tr>
+        <tr><td>Status</td><td>VERDICT REACHED. SENTENCE BINDING</td></tr>
       </table>
       <div class="verdict">
         <div class="score" style="font-size:clamp(34px,7vw,54px)">GUILTY</div>
         <div class="guilty">On all counts</div>
         <div class="deducted">The respondent recently commissioned an audit. The Institute investigated the auditor.</div>
       </div>
-      <div class="sect-h">Charges \u2014 as filed</div>
+      <div class="sect-h">Charges: as filed</div>
       <div class="clause">
-        <div class="no">Count 1 \u2014 Abuse of Institutional Power</div>
+        <div class="no">Count 1: Abuse of Institutional Power</div>
         <div class="body">The respondent commissioned a federal-looking document to prank the person they love. The Division notes the audacity. And, privately, the effort.</div>
         <div class="ded">Plea entered: no contest.</div>
       </div>
       ${counts.map(c=>`
       <div class="clause">
-        <div class="no">${c.no} \u2014 ${c.t}</div>
+        <div class="no">${c.no}: ${c.t}</div>
         <div class="body">${c.body}</div>
         <div class="ded">Disputed by respondent. Dispute overruled.</div>
       </div>`).join('')}
@@ -1260,7 +1296,7 @@ function viewIAReport(data){
         <div class="sb-h">The respondent is hereby sentenced to:</div>
         ${esc(data.sn)}
       </div>
-      <p class="fineprint">Internal Affairs does not exist. Neither did the Institute \u2014 but you both knew that by now. The sentence, however, is real, was pre-agreed by the respondent at the time of purchase, and is considered binding in this household. There is no appeals process. NIRI Form 9-C (rev. never).</p>
+      <p class="fineprint">Internal Affairs does not exist. Neither did the Institute. But you both knew that by now. The sentence, however, is real, was pre-agreed by the respondent at the time of purchase, and is considered binding in this household. There is no appeals process. NIRI Form 9-C (rev. never).</p>
       <div class="reveal open" style="display:block">
         <div class="eyebrow">Closing statement</div>
         <div class="personal">${esc(data.m)}</div>
@@ -1377,6 +1413,40 @@ function wireReveal(){
 }
 
 /* ---------- router ---------- */
+function viewPolicy(kind){
+  const B = BUSINESS;
+  const blocks = {
+    terms: { h:'Terms of Service', body:`
+      <p><b>The short version:</b> The Loyalty Test is a novelty entertainment product. You buy a personalized, joke \u201cassessment\u201d to share with someone you know. It is not a real evaluation, the issuing \u201cinstitute\u201d does not exist, and nothing in a report is a statement of fact.</p>
+      <p><b>Acceptable use.</b> You agree to create reports only about people you personally know and who would take it as the affectionate joke it\u2019s meant to be. You will not use the product to harass, threaten, deceive for gain, impersonate real organizations or officials, or target strangers. We may refuse or remove access for misuse.</p>
+      <p><b>Your content.</b> The details you enter are yours. By using the product you confirm you have the right to use them and that they don\u2019t violate anyone\u2019s rights. Reports are encoded into the share link itself; anyone with the link can view that report.</p>
+      <p><b>No warranty / liability.</b> The product is provided \u201cas is,\u201d for entertainment. To the maximum extent permitted by law, ${B.name} is not liable for how recipients react or for any indirect or consequential damages. These terms are governed by the laws of ${B.jurisdiction}.</p>
+      <p><b>Changes.</b> We may update these terms; continued use means acceptance. Questions: ${B.email}.</p>` },
+    privacy: { h:'Privacy Policy', body:`
+      <p><b>What we collect.</b> To deliver your order we process your payment through our payment provider (which handles your card details directly) and may collect a contact email for your receipt. We use basic, privacy-respecting analytics to understand how the site is used.</p>
+      <p><b>The report content.</b> The names and details you type are encoded directly into your private share link. We don\u2019t require accounts, and we don\u2019t sell your personal information.</p>
+      <p><b>Third parties.</b> Payment processing, hosting, and analytics are handled by standard service providers under their own privacy terms. We share data with them only as needed to run the service or as required by law.</p>
+      <p><b>Your choices.</b> You can request access to or deletion of personal data we hold about you by emailing ${B.email}. Effective ${B.effective}.</p>` },
+    refund: { h:'Refund Policy', body:`
+      <p><b>Digital product.</b> Because your report is generated and delivered instantly as a unique link, all sales are generally final.</p>
+      <p><b>We\u2019ll make it right.</b> If something genuinely went wrong, the link didn\u2019t work, you were charged twice, or the product failed to deliver, email ${B.email} within 14 days and we\u2019ll sort out a fix or a refund.</p>
+      <p><b>How to reach us.</b> Include your order/case number so we can find it fast.</p>` },
+    contact: { h:'Contact', body:`
+      <p>Questions, problems, or feedback? Email <b>${B.email}</b> and a real human (not the fictional institute) will get back to you.</p>
+      <p>For order issues, include your case number so we can locate it quickly.</p>` }
+  };
+  const b = blocks[kind] || blocks.terms;
+  app.innerHTML = `
+  <div class="wrap narrow page-head">
+    <div class="eyebrow">${esc(B.name)} \u00b7 ${esc(B.site)}</div>
+    <h1>${b.h}</h1>
+    <div class="formcard policy-body">
+      ${b.body}
+    </div>
+    <p style="margin-top:18px"><a href="#">\u2190 Back to The Loyalty Test</a></p>
+  </div>`;
+}
+
 function route(){
   const h = location.hash || '';
   window.scrollTo(0,0);
@@ -1406,6 +1476,10 @@ function route(){
   if (h.startsWith('#/upsell'))  return viewUpsell();
   if (h.startsWith('#/filed'))   return viewIADelivery();
   if (h.startsWith('#/success')) return viewSuccess();
+  if (h.startsWith('#/terms'))   return viewPolicy('terms');
+  if (h.startsWith('#/privacy')) return viewPolicy('privacy');
+  if (h.startsWith('#/refund'))  return viewPolicy('refund');
+  if (h.startsWith('#/contact')) return viewPolicy('contact');
   viewLanding();
 }
 window.addEventListener('hashchange', route);
