@@ -1336,51 +1336,25 @@ function viewIAReport(data){
 function waxSVG(){
   return `<svg viewBox="0 0 140 140" aria-hidden="true">
     <defs>
-      <radialGradient id="wxBody" cx="40%" cy="34%" r="72%">
+      <radialGradient id="wxBody" cx="40%" cy="34%" r="75%">
         <stop offset="0%" stop-color="#c8463b"/>
-        <stop offset="48%" stop-color="#a8362b"/>
-        <stop offset="100%" stop-color="#6f1f15"/>
+        <stop offset="52%" stop-color="#a8362b"/>
+        <stop offset="100%" stop-color="#7a2318"/>
       </radialGradient>
-      <radialGradient id="wxInner" cx="42%" cy="38%" r="70%">
+      <radialGradient id="wxDisc" cx="42%" cy="36%" r="72%">
         <stop offset="0%" stop-color="#b83d31"/>
-        <stop offset="100%" stop-color="#82261a"/>
+        <stop offset="100%" stop-color="#8a2a1e"/>
       </radialGradient>
-      <path id="wxTop" d="M70 70 m-43,0 a43,43 0 1,1 86,0" fill="none"/>
-      <path id="wxBot" d="M70 70 m43,0 a43,43 0 1,1 -86,0" fill="none"/>
     </defs>
-    <!-- irregular pressed-wax body -->
-    <path fill="url(#wxBody)" d="M70 6
-      c10 0 16 7 25 8 c10 1 17-3 23 4 c5 6 1 15 5 23 c4 8 12 11 12 21
-      c0 10-9 14-12 23 c-3 9 1 17-6 23 c-6 5-15 1-23 5 c-8 4-11 12-21 12
-      c-10 0-13-9-22-12 c-9-3-17 1-23-6 c-5-6-1-15-5-23 c-4-8-12-12-12-22
-      c0-10 9-14 12-23 c3-9-2-16 5-22 c6-5 14-1 22-5 c8-4 11-9 20-9 Z"/>
-    <!-- emboss rings -->
-    <circle cx="70" cy="70" r="55" fill="none" stroke="rgba(0,0,0,.22)" stroke-width="2"/>
-    <circle cx="70" cy="70" r="52" fill="url(#wxInner)"/>
-    <circle cx="70" cy="70" r="49" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="1"/>
-    <circle cx="70" cy="70" r="34" fill="none" stroke="rgba(0,0,0,.18)" stroke-width="1.5"/>
-    <circle cx="70" cy="70" r="32.5" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
-    <!-- curved institutional text -->
-    <g fill="rgba(255,240,235,.72)" font-family="Georgia, 'Times New Roman', serif" font-size="8.4" letter-spacing="1.6">
-      <text><textPath href="#wxTop" startOffset="50%" text-anchor="middle">NATIONAL INSTITUTE OF RELATIONSHIP INTEGRITY</textPath></text>
-    </g>
-    <g fill="rgba(255,240,235,.55)" font-family="'Courier New', monospace" font-size="7" letter-spacing="2.4">
-      <text><textPath href="#wxBot" startOffset="50%" text-anchor="middle">EST. NEVER</textPath></text>
-    </g>
-    <!-- embossed central crest: laurel + star -->
-    <g transform="translate(70,71)">
-      <g fill="none" stroke="rgba(0,0,0,.18)" stroke-width="2.4" stroke-linecap="round" transform="translate(0,1)">
-        <path d="M-20 12 C-26 2 -24 -8 -16 -14"/><path d="M20 12 C26 2 24 -8 16 -14"/>
-      </g>
-      <g fill="none" stroke="rgba(255,240,235,.62)" stroke-width="2.2" stroke-linecap="round">
-        <path d="M-20 12 C-26 2 -24 -8 -16 -14"/>
-        <path d="M-19 6 l-5 -1 M-22 0 l-5 -2 M-22 -6 l-4 -3"/>
-        <path d="M20 12 C26 2 24 -8 16 -14"/>
-        <path d="M19 6 l5 -1 M22 0 l5 -2 M22 -6 l4 -3"/>
-      </g>
-      <path transform="translate(0,1)" fill="rgba(0,0,0,.18)" d="M0 -15 l4.6 9.4 10.3 1.5 -7.5 7.3 1.8 10.3 L0 18.6 -8.9 23.3 l1.7-10.3 -7.4-7.3 10.3-1.5Z"/>
-      <path fill="rgba(255,240,235,.78)" d="M0 -15 l4.6 9.4 10.3 1.5 -7.5 7.3 1.8 10.3 L0 18.6 -8.9 23.3 l1.7-10.3 -7.4-7.3 10.3-1.5Z"/>
-    </g>
+    <circle cx="70.0" cy="20.0" r="9.5" fill="url(#wxBody)"/><circle cx="91.7" cy="25.0" r="9.5" fill="url(#wxBody)"/><circle cx="109.1" cy="38.8" r="9.5" fill="url(#wxBody)"/><circle cx="118.7" cy="58.9" r="9.5" fill="url(#wxBody)"/><circle cx="118.7" cy="81.1" r="9.5" fill="url(#wxBody)"/><circle cx="109.1" cy="101.2" r="9.5" fill="url(#wxBody)"/><circle cx="91.7" cy="115.0" r="9.5" fill="url(#wxBody)"/><circle cx="70.0" cy="120.0" r="9.5" fill="url(#wxBody)"/><circle cx="48.3" cy="115.0" r="9.5" fill="url(#wxBody)"/><circle cx="30.9" cy="101.2" r="9.5" fill="url(#wxBody)"/><circle cx="21.3" cy="81.1" r="9.5" fill="url(#wxBody)"/><circle cx="21.3" cy="58.9" r="9.5" fill="url(#wxBody)"/><circle cx="30.9" cy="38.8" r="9.5" fill="url(#wxBody)"/><circle cx="48.3" cy="25.0" r="9.5" fill="url(#wxBody)"/>
+    <circle cx="70" cy="70" r="52" fill="url(#wxBody)"/>
+    <circle cx="70" cy="70" r="41" fill="url(#wxDisc)"/>
+    <circle cx="70" cy="70" r="41" fill="none" stroke="rgba(0,0,0,.28)" stroke-width="2"/>
+    <circle cx="70" cy="70" r="38.5" fill="none" stroke="rgba(255,235,225,.30)" stroke-width="1.4"/>
+    <circle cx="70" cy="70" r="30" fill="none" stroke="rgba(0,0,0,.16)" stroke-width="1.2"/>
+    <polygon points="70.00,50.2 75.05,64.24 89.97,64.71 78.18,73.86 82.34,88.19 70.00,79.80 57.66,88.19 61.82,73.86 50.03,64.71 64.95,64.24" fill="rgba(0,0,0,.22)"/>
+    <polygon points="70.00,49.00 75.05,63.04 89.97,63.51 78.18,72.66 82.34,86.99 70.00,78.60 57.66,86.99 61.82,72.66 50.03,63.51 64.95,63.04" fill="#f3e3d6"/>
+    <ellipse cx="57" cy="50" rx="22" ry="11" fill="rgba(255,255,255,.09)" transform="rotate(-28 57 50)"/>
   </svg>`;
 }
 
