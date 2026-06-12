@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<link rel="icon" type="image/png" href="/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Loyalty Assessment Results · Confidential</title>
 <meta name="description" content="Case file finalized. Approved for release.">
 <meta property="og:title" content="Loyalty Assessment Results · Confidential">
 <meta property="og:description" content="Case file finalized and approved for release. This link expires in 48 hours.">
 <meta property="og:type" content="website">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/favicon.png">
 <!-- OG image: the link-preview thumbnail shown in WhatsApp/iMessage. MUST be an absolute https URL.
      Replace the domain below once your custom domain is connected, then re-share to refresh caches. -->
 <meta property="og:image" content="https://loyaltyassessment.org/og.png">
@@ -1090,6 +1091,15 @@ function viewUpsell(){
   });
 }
 
+async function shortenLink(longUrl){
+  try {
+    const r = await fetch('https://is.gd/create.php?format=simple&url=' + encodeURIComponent(longUrl));
+    if (!r.ok) return null;
+    const s = (await r.text()).trim();
+    return /^https:\/\/is\.gd\//.test(s) ? s : null;
+  } catch(e){ return null; }
+}
+
 function viewSuccess(){
   const d = loadDraft();
   if (!d){ location.hash = '#/create'; return; }
@@ -1129,6 +1139,13 @@ function viewSuccess(){
   </div>`;
   wireCopy(app);
   $('#newFileBtn').addEventListener('click', ()=> sessionStorage.removeItem('lt_draft'));
+  shortenLink(link).then(short=>{
+    if (!short) return;
+    const pm = document.getElementById('preMsg');
+    if (pm) pm.value = 'I had you officially assessed. The results came back.\n' + short;
+    const rl = document.getElementById('rawLink');
+    if (rl) rl.value = short;
+  });
 }
 
 /* ---------- Internal Affairs: counter-case flow ---------- */
@@ -1250,6 +1267,11 @@ function viewIADelivery(){
     </div>
   </div>`;
   wireCopy(app);
+  shortenLink(link).then(short=>{
+    if (!short) return;
+    const im = document.getElementById('iaMsg');
+    if (im) im.value = 'Internal Affairs got involved. This is your official notice.\n' + short;
+  });
 }
 
 function viewIAReport(data){
@@ -1439,6 +1461,7 @@ function viewPolicy(kind){
       </ul>
       <p><b>3. Chargebacks:</b> Please contact us before filing a dispute with your bank. We are reasonable humans and will fix genuine technical errors.</p>
       <p><b>4. How to Request:</b> If you meet the exception criteria, email <b>${B.email}</b> within 14 days. Subject Line: Refund Request - [Your Order/Case Number].</p>` },
+    contact: { h:'Contact', body:`
       <p>Questions, problems, or feedback? Email <b>${B.email}</b> and a real human (not the fictional institute) will get back to you.</p>
       <p>For order issues, include your case number so we can locate it quickly.</p>` }
   };
