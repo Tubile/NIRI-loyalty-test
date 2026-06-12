@@ -252,6 +252,57 @@ h1 .hl::after{content:"";position:absolute;left:-2px;right:-2px;bottom:.08em;hei
 .modal .row{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
 
 a.editlink{display:inline-block;margin-top:18px;font-family:var(--type);font-size:13px;color:var(--paper);opacity:.8}
+
+/* ---------- checkout + order bump ---------- */
+.checkout{background:var(--paper);color:var(--ink);border:1px solid #d3c6a1;border-radius:3px;
+  padding:clamp(20px,4vw,30px);margin:22px 0 8px;box-shadow:0 14px 36px rgba(0,0,0,.28)}
+.checkout .co-h{font-family:var(--type);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:14px}
+.bump{display:flex;gap:14px;align-items:flex-start;border:2px dashed var(--stamp);border-radius:4px;
+  background:#fff;padding:16px 16px 15px;cursor:pointer;position:relative;transition:background .1s}
+.bump:hover{background:#fffaf2}
+.bump.on{background:#fff5ef;border-style:solid}
+.bump .box{flex:0 0 auto;width:22px;height:22px;border:2px solid var(--stamp);border-radius:4px;margin-top:2px;
+  display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;background:#fff;transition:background .1s}
+.bump.on .box{background:var(--stamp)}
+.bump.on .box::after{content:"\2713"}
+.bump input{position:absolute;opacity:0;pointer-events:none}
+.bump .bump-body{flex:1}
+.bump .bump-tag{display:inline-block;font-family:var(--type);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  background:var(--stamp);color:#fff;padding:2px 8px;border-radius:2px;margin-bottom:7px}
+.bump .bump-title{font-weight:700;font-size:16.5px;margin:0 0 4px}
+.bump .bump-title .pr{color:var(--stamp)}
+.bump .bump-desc{font-size:14px;color:var(--ink-soft);line-height:1.5;margin:0}
+.total-row{display:flex;justify-content:space-between;align-items:baseline;margin:20px 2px 4px;font-family:var(--type)}
+.total-row .lbl{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
+.total-row .amt{font-size:26px;font-weight:700;color:var(--ink);font-family:var(--serif)}
+.total-row .amt .strike{font-size:16px;color:var(--ink-soft);text-decoration:line-through;margin-right:8px;font-weight:400}
+.checkout .pay{width:100%;justify-content:center;margin-top:14px}
+.guarantee{text-align:center;font-family:var(--type);font-size:11.5px;color:var(--ink-soft);margin-top:12px;letter-spacing:.04em}
+
+/* ---------- sealed envelope screen ---------- */
+.env-screen{min-height:calc(100vh - 52px);display:flex;align-items:center;justify-content:center;padding:40px 18px}
+.env{max-width:440px;width:100%;text-align:center;position:relative}
+.env .env-paper{background:var(--folder);background-image:linear-gradient(150deg,#e0bd6a,#cda347);
+  border:1px solid var(--folder-edge);border-radius:5px;padding:46px 30px 40px;position:relative;overflow:hidden;
+  box-shadow:0 26px 60px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.3)}
+.env .env-paper::before{content:"";position:absolute;inset:0;opacity:.5;mix-blend-mode:multiply;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E")}
+.env .flap{position:absolute;top:0;left:0;right:0;height:84px;
+  background:linear-gradient(160deg,#d8b15a,#c39a3e);clip-path:polygon(0 0,100% 0,50% 100%);
+  border-bottom:1px solid rgba(0,0,0,.15);z-index:1}
+.env .classified{position:relative;z-index:2;margin-top:64px;font-family:var(--type);letter-spacing:.22em;
+  text-transform:uppercase;font-size:12px;color:#7a3a1f;border:2px solid #7a3a1f;display:inline-block;
+  padding:5px 14px;border-radius:2px;transform:rotate(-2deg);opacity:.8}
+.env .addr{position:relative;z-index:2;font-family:var(--type);font-size:13px;color:#5a4422;margin:22px 0 8px;line-height:1.7}
+.env .addr b{color:#3f3015}
+.wax{position:relative;z-index:3;width:96px;height:96px;margin:24px auto 6px}
+.wax svg{width:100%;height:100%;filter:drop-shadow(0 6px 10px rgba(0,0,0,.35))}
+.env .instruct{position:relative;z-index:2;font-family:var(--type);font-size:12px;color:#6b5226;margin-top:6px;letter-spacing:.04em}
+.env .break-btn{margin-top:26px}
+.env-note{margin-top:18px;font-family:var(--type);font-size:11.5px;color:#b3aa90;letter-spacing:.05em}
+.wax.breaking{animation:waxbreak .5s ease forwards}
+@keyframes waxbreak{0%{transform:scale(1) rotate(0)}40%{transform:scale(1.12) rotate(-3deg)}100%{transform:scale(.6) rotate(8deg);opacity:0}}
+@media (prefers-reduced-motion:reduce){.wax.breaking{animation:none;opacity:0}}
 </style>
 </head>
 <body>
@@ -520,7 +571,7 @@ function reportPaperHTML(data, opts){
       <div class="deducted">Points deducted: <b>${total}</b>. Itemized findings below.</div>
     </div>
     <div class="${locked ? 'lockwrap' : ''}">
-      ${locked ? '<div class="lockpanel"><div class="inner"><div class="lk">Preview locked</div><h3>The findings are sealed.</h3><p>' + esc(data.n) + '\u2019s itemized deductions, the official stamp, and the final determination \u2014 one step away.</p><button class="btn red big" id="unlockBtn">Unlock full report \u2014 $4.99</button></div></div>' : ''}
+      ${locked ? '<div class="lockpanel"><div class="inner"><div class="lk">Preview locked</div><h3>The findings are sealed.</h3><p>' + esc(data.n) + '\u2019s itemized deductions, the official stamp, and the final determination \u2014 one step away.</p><button class="btn red big" id="toCheckout">Unlock full report \u2193</button></div></div>' : ''}
       <div class="${locked ? 'locked-zone' : ''}">
         <div class="sect-h">Itemized findings \u2014 excerpt</div>
         ${clauseHTML}
@@ -761,15 +812,54 @@ function viewPreview(){
     <h1>The file on ${esc(d.n)} is ready.</h1>
     <p class="lede">Verdict\u2019s on the record. The findings stay sealed until you unlock.</p>
     <div style="margin-top:22px">${reportPaperHTML(d, {locked:true})}</div>
+
+    <div class="checkout" id="checkout">
+      <div class="co-h">Order summary \u00b7 Case ${esc(d.k)}</div>
+      <label class="bump" id="bump">
+        <input type="checkbox" id="bumpToggle">
+        <span class="box"></span>
+        <span class="bump-body">
+          <span class="bump-tag">Most popular add-on</span>
+          <p class="bump-title">Add the Sealed Verdict \u2014 <span class="pr">+$2.99</span></p>
+          <p class="bump-desc">Make ${esc(d.n)} break a wax seal before they\u2019re allowed to read it. They land on a classified envelope first \u2014 one button, one beat of \u201cwait, what is this\u201d \u2014 then the report. That flinch is the part you came for.</p>
+        </span>
+      </label>
+      <div class="total-row">
+        <span class="lbl">Total today</span>
+        <span class="amt" id="total">$4.99</span>
+      </div>
+      <button class="btn red big pay" id="unlockBtn">Unlock &amp; deliver</button>
+      <p class="guarantee">Instant link \u00b7 no account \u00b7 they never know it cost less than a coffee</p>
+    </div>
+
     <p style="margin-top:18px"><a href="#/create">\u2190 Back to edit the testimony</a></p>
   </div>`;
 
+  const bump = $('#bump'), toggle = $('#bumpToggle'), total = $('#total');
+  const toCheckout = $('#toCheckout');
+  if (toCheckout) toCheckout.addEventListener('click', ()=> $('#checkout').scrollIntoView({behavior:'smooth', block:'center'}));
+  function refresh(){
+    const on = toggle.checked;
+    bump.classList.toggle('on', on);
+    total.innerHTML = on
+      ? '<span class="strike">$4.99</span>$7.98'
+      : '$4.99';
+  }
+  toggle.addEventListener('change', refresh);
+  refresh();
+
   $('#unlockBtn').addEventListener('click', ()=>{
+    const sealed = toggle.checked;
     showModal(
       'Checkout isn\u2019t wired in yet.',
-      'This is the beta build \u2014 the payment step (Stripe / PayPal) drops in right here. For now, unlocking is free. Enjoy it while it lasts.',
+      'This is the beta build \u2014 the payment step (Stripe / PayPal) drops in right here, and the order bump rides along with it. For now, unlocking is free.',
       [
-        { label:'Unlock free', fn:()=>{ location.hash = '#/success'; } },
+        { label: sealed ? 'Unlock free (with seal)' : 'Unlock free', fn:()=>{
+            const cur = loadDraft() || d;
+            cur.s = sealed ? 1 : 0;
+            saveDraft(cur);
+            location.hash = '#/success';
+          } },
         { label:'Back', secondary:true }
       ]
     );
@@ -806,12 +896,61 @@ function viewSuccess(){
       <p style="margin-top:8px"><a href="${esc(link)}" target="_blank" rel="noopener">Preview exactly what ${esc(d.n)} will see \u2192</a></p>
     </div>
 
+    ${d.s ? '<div class="notice"><b>Sealed Verdict is active.</b> ' + esc(d.n) + ' will hit a classified wax-sealed envelope first, and has to break it to read the report. Worth being in the room for.</div>' : ''}
+
     <div class="notice"><b>Timing tip from the lab.</b> Send it when you\u2019re both home and bored \u2014 not when they\u2019re driving, working, or already annoyed at you. Comedy is timing; so is mercy.</div>
 
     <p style="margin-top:30px"><a class="btn secondary" href="#/create" id="newFileBtn">Open another file</a></p>
   </div>`;
   wireCopy(app);
   $('#newFileBtn').addEventListener('click', ()=> sessionStorage.removeItem('lt_draft'));
+}
+
+function waxSVG(){
+  return `<svg viewBox="0 0 100 100" aria-hidden="true">
+    <defs><radialGradient id="wx" cx="38%" cy="34%" r="70%">
+      <stop offset="0%" stop-color="#d2503f"/><stop offset="55%" stop-color="#b23a2e"/><stop offset="100%" stop-color="#7f2419"/>
+    </radialGradient></defs>
+    <path d="M50 4 60 12 73 9 76 22 88 28 83 41 90 53 79 60 78 73 65 73 56 84 45 78 32 82 27 70 14 66 17 53 8 43 17 33 14 20 27 19 33 7 46 11Z" fill="url(#wx)"/>
+    <circle cx="50" cy="46" r="27" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="1.5"/>
+    <g fill="#fff" opacity=".88" transform="translate(50,46)">
+      <path d="M0 -16 l4.7 9.6 10.6 1.5 -7.7 7.5 1.8 10.5 L0 17.6 -9.4 22.6 l1.8 -10.5 -7.7 -7.5 10.6 -1.5Z"/>
+    </g>
+    <text x="50" y="80" text-anchor="middle" font-family="Courier New, monospace" font-size="8" letter-spacing="1.5" fill="rgba(255,255,255,.7)">N.I.R.I.</text>
+  </svg>`;
+}
+
+let sealBroken = false;
+
+function viewEnvelope(data){
+  app.innerHTML = `
+  <div class="env-screen">
+    <div class="env">
+      <div class="env-paper">
+        <div class="flap"></div>
+        <div class="classified">Classified</div>
+        <div class="addr">
+          TO: <b>${esc(data.n).toUpperCase()}</b><br>
+          RE: CASE ${esc(data.k)}<br>
+          HANDLING: OPEN IN PRESENCE OF SUBJECT ONLY
+        </div>
+        <div class="wax" id="wax">${waxSVG()}</div>
+        <div class="instruct">Seal intact. Contents not yet viewed.</div>
+        <button class="btn big break-btn" id="breakBtn">Break the seal</button>
+      </div>
+      <p class="env-note">This envelope was sealed specifically for you. There is no unsealing it twice.</p>
+    </div>
+  </div>`;
+
+  $('#breakBtn').addEventListener('click', ()=>{
+    sealBroken = true;
+    const wax = $('#wax');
+    wax.classList.add('breaking');
+    const btn = $('#breakBtn');
+    btn.disabled = true;
+    btn.textContent = 'Opening\u2026';
+    setTimeout(()=> viewReport(data), 560);
+  });
 }
 
 function viewReport(data){
@@ -839,7 +978,10 @@ function route(){
   if (h.startsWith('#r=')){
     try {
       const data = b64uDecode(h.slice(3));
-      if (data && data.n && data.c) return viewReport(data);
+      if (data && data.n && data.c){
+        if (data.s && !sealBroken) return viewEnvelope(data);
+        return viewReport(data);
+      }
     } catch(e){ /* fall through to landing */ }
   }
   if (h.startsWith('#/create'))  return viewCreate();
